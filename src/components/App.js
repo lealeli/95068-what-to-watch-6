@@ -21,17 +21,11 @@ const App = (props) => {
             <Login />
           </Route>
           <Route exact path="/mylist">
-            <MyList />
+            <MyList {...props}/>
           </Route>
-          <Route exact path="/films/:id">
-            <MoviePage />
-          </Route>
-          <Route exact path="/films/:id/review">
-            <AddReview />
-          </Route>
-          <Route exact path="/player/:id">
-            <Player />
-          </Route>
+          <Route path="/films/:id" render={(prop) => <MoviePage {...props} {...prop}/> } />
+          <Route path="/films/:id/review" render={(prop) => <AddReview {...props} {...prop}/> } />
+          <Route path="/player/:id" render={(prop) => <Player {...props} {...prop}/> } />
           <Route>
             <NotFoundScreen />
           </Route>
