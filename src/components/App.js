@@ -23,9 +23,9 @@ const App = (props) => {
           <Route exact path="/mylist">
             <MyList {...props}/>
           </Route>
-          <Route path="/films/:id" render={(prop) => <MoviePage {...props} {...prop}/> } />
-          <Route path="/films/:id/review" render={(prop) => <AddReview {...props} {...prop}/> } />
-          <Route path="/player/:id" render={(prop) => <Player {...props} {...prop}/> } />
+          <Route exact path="/films/:id" render={(prop) => <MoviePage {...props} {...prop}/> } />
+          <Route exact path="/films/:id/review" render={(prop) => <AddReview {...props} {...prop}/> } />
+          <Route exact path="/player/:id" render={(prop) => <Player {...props} {...prop}/> } />
           <Route>
             <NotFoundScreen />
           </Route>

@@ -16,6 +16,7 @@ const FilmCard = ({name, link, id, onMouseEnter, onMouseLeave}) => (
 FilmCard.propTypes = {
   name: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired
 };
