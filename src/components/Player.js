@@ -1,9 +1,13 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
-const Player = () => (
-  <>
+const Player = ({films = [], match}) => {
+
+  const film = films.find((item) => item.id === Number(match.params.id));
+
+  return <>
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.video_link} className="player__video" poster={film.poster_image}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -23,7 +27,7 @@ const Player = () => (
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
@@ -34,7 +38,12 @@ const Player = () => (
         </div>
       </div>
     </div>
-  </>
-);
+  </>;
+};
+
+Player.propTypes = {
+  films: PropTypes.array.isRequired,
+  match: PropTypes.object.isRequired
+};
 
 export default Player;
