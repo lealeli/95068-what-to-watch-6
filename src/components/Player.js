@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
-const Player = ({films, match}) => {
+const Player = ({films = [], match}) => {
 
   const film = films.find((item) => item.id === Number(match.params.id));
 

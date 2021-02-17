@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 const FormReview = () => {
   const [reviewForm, setReviewForm] = useState({
-    rating: 8,
+    rating: null,
     reviewText: ``
   });
 

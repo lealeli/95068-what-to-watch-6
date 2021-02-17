@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import FormReview from "./FormReview";
 
-const AddReview = ({films, match}) => {
+const AddReview = ({films = [], match}) => {
   const film = films.find((item) => item.id === Number(match.params.id));
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-const MoviePage = ({films, match}) => {
+const MoviePage = ({films = [], match}) => {
   const film = films.find((item) => item.id === Number(match.params.id));
 
   return (
