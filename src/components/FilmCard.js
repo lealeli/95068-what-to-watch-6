@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import VideoPlayer from "./VideoPlayer";
@@ -8,14 +8,13 @@ const FilmCard = ({name, link, videoLink, id, onMouseEnter, onMouseLeave, isStar
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
+
     if (isStart) {
       setTimeout(() => setIsActive(true), 1000);
     } else {
       setIsActive(false);
     }
   }, [isStart]);
-
-  console.log(name, isStart, isActive);
 
   return (
     <article className="small-movie-card catalog__movies-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >

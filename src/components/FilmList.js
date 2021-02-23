@@ -24,7 +24,6 @@ FilmList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
   })).isRequired
 };
 
