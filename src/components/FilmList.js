@@ -6,17 +6,26 @@ const FilmList = ({films}) => {
   const [filmId, setFilmId] = useState(null);
 
   return (
-    <>
-      <div className="catalog__movies-list">
-        {films.map((elem) => <FilmCard key={elem.id} name={elem.name} link={elem.preview_image}
-          isStart={elem.id === filmId} videoLink={elem.video_link} id={elem.id}
-          onMouseEnter={() => {
-            setFilmId(elem.id);
-          }} onMouseLeave={() => {
-            setFilmId(null);
-          }}/>)}
-      </div>
-    </>
+    <div className="catalog__movies-list">
+      {films.map((elem) => {
+        const setActiveMovie = () => setFilmId(elem.id);
+        const cleanActiveMovie = () => setFilmId(null);
+
+        return (
+          <FilmCard
+            key={elem.id}
+            name={elem.name}
+            previewImage={elem.preview_image}
+            videoLink={elem.video_link}
+            id={elem.id}
+            isMuted={filmId === elem.id}
+            isPlaying={filmId === elem.id}
+            onMouseEnter={setActiveMovie}
+            onMouseLeave={cleanActiveMovie}
+          />
+        );
+      })}
+    </div>
   );
 };
 

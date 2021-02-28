@@ -1,32 +1,36 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from "prop-types";
 
-const VideoPlayer = ({defaultIsPlaying, src, link}) => {
-  const [isPlaying, setIsPlaying] = useState(defaultIsPlaying);
-  const videoRef = useRef();
-
-  useEffect(() => {
-    videoRef.current.onplay = () => setIsPlaying(true);
-    videoRef.current.onpause = () => setIsPlaying(false);
-  }, [src]);
+const VideoPlayer = ({isPlaying, isMuted = false, src, poster}) => {
+  const videoRef = useRef(null);
+  const video = videoRef.current;
+  let timeoutId;
 
   useEffect(() => {
     if (isPlaying) {
-      videoRef.current.play();
+      timeoutId = setTimeout(() => video.play(), 1000);
+      isMuted = true;
       return;
+    } else {
+      if (video !== null) {
+        video.load();
+        isMuted = false;
+      }
     }
-    videoRef.current.pause();
+
+    return () => clearTimeout(timeoutId);
   }, [isPlaying]);
 
-  return <>
-    <video className="small-movie-card__image" src={src} ref={videoRef} link={link}></video>
-  </>;
+  console.log(isMuted);
+  return <video className="small-movie-card__image" controls={isMuted} poster={poster} src={src} ref={videoRef} width="100%" height="100%"></video>;
 };
 
 VideoPlayer.propTypes = {
-  defaultIsPlaying: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  isMuted: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired,
+  isStart: PropTypes.bool.isRequired,
 };
 
 export default VideoPlayer;
