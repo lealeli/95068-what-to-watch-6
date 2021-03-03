@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import VideoPlayer from "./VideoPlayer";
 
-const FilmCard = ({name, previewImage, videoLink, id, isMuted, isPlaying, onMouseEnter, onMouseLeave}) => {
+const FilmCard = ({name, previewImage, previewVideoLink, id, isMuted, isPlaying, onMouseEnter, onMouseLeave}) => {
 
   return (
     <article className="small-movie-card catalog__movies-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >
-      <VideoPlayer src={videoLink} poster={previewImage} isMuted={isMuted} isPlaying={isPlaying}/>
+      <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted={isMuted} isPlaying={isPlaying}/>
       <h3 className="small-movie-card__title">
         <Link className="small-movie-card__link" to={`/films/${id}`}>{name}</Link>
       </h3>
@@ -18,7 +18,7 @@ const FilmCard = ({name, previewImage, videoLink, id, isMuted, isPlaying, onMous
 FilmCard.propTypes = {
   name: PropTypes.string.isRequired,
   previewImage: PropTypes.string.isRequired,
-  videoLink: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   isMuted: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,

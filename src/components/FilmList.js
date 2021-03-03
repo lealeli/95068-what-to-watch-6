@@ -16,7 +16,7 @@ const FilmList = ({films}) => {
             key={elem.id}
             name={elem.name}
             previewImage={elem.preview_image}
-            videoLink={elem.video_link}
+            previewVideoLink={elem.preview_video_link}
             id={elem.id}
             isMuted={filmId === elem.id}
             isPlaying={filmId === elem.id}

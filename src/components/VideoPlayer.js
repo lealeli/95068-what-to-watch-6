@@ -1,28 +1,38 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from "prop-types";
 
-const VideoPlayer = ({isPlaying, isMuted = false, src, poster}) => {
+const VideoPlayer = ({isPlaying, isMuted = true, src, poster}) => {
   const videoRef = useRef(null);
   const video = videoRef.current;
-  let timeoutId;
 
   useEffect(() => {
+    let timeoutId;
+
     if (isPlaying) {
       timeoutId = setTimeout(() => video.play(), 1000);
-      isMuted = true;
       return;
     } else {
       if (video !== null) {
         video.load();
-        isMuted = false;
       }
     }
 
     return () => clearTimeout(timeoutId);
   }, [isPlaying]);
 
-  console.log(isMuted);
-  return <video className="small-movie-card__image" controls={isMuted} poster={poster} src={src} ref={videoRef} width="100%" height="100%"></video>;
+  return <video
+    className="small-movie-card__image"
+    muted={isMuted}
+    poster={poster}
+    ref={videoRef}
+    width="100%"
+    height="100%"
+  >
+    <source
+      src={src}
+      type="video/mp4"
+    />
+  </video>;
 };
 
 VideoPlayer.propTypes = {
