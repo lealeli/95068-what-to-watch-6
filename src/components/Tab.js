@@ -1,6 +1,30 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
+
+const tabs = [`Overview`, `Details`, `Reviews`];
+const rating = {
+  'Bad': [0, 3],
+  'Normal': [3, 6],
+  'Good': [6, 8],
+  'Very good': [8, 10]
+};
+
+const getRatingString = (ratingFilm) => {
+  for (let prop in rating) {
+    if ((ratingFilm >= rating[prop][0]) && (ratingFilm < rating[prop][1])) {
+      return prop;
+    }
+  }
+  return `Awesome`;
+};
+
+const getTimeFromMins = (mins) => {
+  let hours = Math.trunc(mins / 60);
+  let minutes = mins % 60;
+  return hours + `h ` + minutes + `m`;
+};
+
 const Tab = ({film = {}}) => {
 
   const [filmTab, setFilmTab] = useState(`Overview`);
@@ -13,7 +37,7 @@ const Tab = ({film = {}}) => {
             <div className="movie-card__text-col">
               <p className="movie-card__details-item">
                 <strong className="movie-card__details-name">Director</strong>
-                <span className="movie-card__details-value">Wes Andreson</span>
+                <span className="movie-card__details-value">{film.director}</span>
               </p>
               <p className="movie-card__details-item">
                 <strong className="movie-card__details-name">Starring</strong>
@@ -37,15 +61,15 @@ const Tab = ({film = {}}) => {
             <div className="movie-card__text-col">
               <p className="movie-card__details-item">
                 <strong className="movie-card__details-name">Run Time</strong>
-                <span className="movie-card__details-value">1h 39m</span>
+                <span className="movie-card__details-value">{getTimeFromMins(film.run_time)}</span>
               </p>
               <p className="movie-card__details-item">
                 <strong className="movie-card__details-name">Genre</strong>
-                <span className="movie-card__details-value">Comedy</span>
+                <span className="movie-card__details-value">{film.genre}</span>
               </p>
               <p className="movie-card__details-item">
                 <strong className="movie-card__details-name">Released</strong>
-                <span className="movie-card__details-value">2014</span>
+                <span className="movie-card__details-value">{film.released}</span>
               </p>
             </div>
           </div>
@@ -150,8 +174,8 @@ const Tab = ({film = {}}) => {
       <div className="movie-rating">
         <div className="movie-rating__score">{film.rating}</div>
         <p className="movie-rating__meta">
-          <span className="movie-rating__level">Very good</span>
-          <span className="movie-rating__count">240 ratings</span>
+          <span className="movie-rating__level">{getRatingString(film.rating)}</span>
+          <span className="movie-rating__count">{film.scores_count} ratings</span>
         </p>
       </div>
 
@@ -163,9 +187,9 @@ const Tab = ({film = {}}) => {
           sexual needs of the many elderly women who stay there. When one of Gustave&apos;s lovers dies mysteriously,
           Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
 
-        <p className="movie-card__director"><strong>Director: Wes Andreson</strong></p>
+        <p className="movie-card__director"><strong>Director: {film.director}</strong></p>
 
-        <p className="movie-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
+        <p className="movie-card__starring"><strong>Starring: {film.starring.map((elem) => (`${elem}, `))}
           and other</strong></p>
       </div>
     </>;
@@ -175,15 +199,13 @@ const Tab = ({film = {}}) => {
     <div className="movie-card__desc">
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
-          <li className="movie-nav__item movie-nav__item--active">
-            <a href="#" onClick={(event) => event.preventDefault()} className="movie-nav__link">Overview</a>
-          </li>
-          <li className="movie-nav__item" onClick={()=> setFilmTab(`Details`)}>
-            <a href="#" onClick={(event) => event.preventDefault()} className="movie-nav__link">Details</a>
-          </li>
-          <li className="movie-nav__item" onClick={()=>setFilmTab(`Reviews`)}>
-            <a href="#" onClick={(event) => event.preventDefault()} className="movie-nav__link">Reviews</a>
-          </li>
+          {
+            tabs.map((id) => (
+              <li key={id} className={`movie-nav__item ${id === filmTab && `movie-nav__item--active`}`} onClick={()=> setFilmTab(id)}>
+                <a className="movie-nav__link">{id}</a>
+              </li>
+            ))
+          }
         </ul>
       </nav>
 
