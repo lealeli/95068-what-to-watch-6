@@ -1,20 +1,24 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import FilmCard from "./FilmCard";
 
 const FilmList = ({films}) => {
-  const [, setFilm] = useState(null);
 
   return (
-    <>
-      <div className="catalog__movies-list">
-        {films.map((elem) => <FilmCard key={elem.id} name={elem.name} link={elem.preview_image} id={elem.id} onMouseEnter={() => {
-          setFilm(elem.id);
-        }} onMouseLeave={() => {
-          setFilm(null);
-        }}/>)}
-      </div>
-    </>
+    <div className="catalog__movies-list">
+      {films.map((elem) => {
+
+        return (
+          <FilmCard
+            key={elem.id}
+            name={elem.name}
+            previewImage={elem.preview_image}
+            previewVideoLink={elem.preview_video_link}
+            id={elem.id}
+          />
+        );
+      })}
+    </div>
   );
 };
 
@@ -22,7 +26,6 @@ FilmList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
   })).isRequired
 };
 

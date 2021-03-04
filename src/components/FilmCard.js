@@ -1,24 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import VideoPlayer from "./VideoPlayer";
 
-const FilmCard = ({name, link, id, onMouseEnter, onMouseLeave}) => (
-  <article className="small-movie-card catalog__movies-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >
-    <div className="small-movie-card__image">
-      <img src={link} alt="Mindhunter" width="280" height="175"/>
-    </div>
-    <h3 className="small-movie-card__title">
-      <Link className="small-movie-card__link" to={`/films/${id}`}>{name}</Link>
-    </h3>
-  </article>
-);
+const FilmCard = ({name, previewImage, previewVideoLink, id}) => {
+
+  const [isStart, setIsStart] = useState(false);
+
+  const setActiveMovie = () => {
+    setIsStart(true);
+  };
+  const cleanActiveMovie = () => {
+    setIsStart(false);
+  };
+
+  return (
+    <article className="small-movie-card catalog__movies-card" onMouseEnter={setActiveMovie} onMouseLeave={cleanActiveMovie} >
+      <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted={isStart} isPlaying={isStart}/>
+      <h3 className="small-movie-card__title">
+        <Link className="small-movie-card__link" to={`/films/${id}`}>{name}</Link>
+      </h3>
+    </article>
+  );
+};
 
 FilmCard.propTypes = {
   name: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired
+
 };
 
 export default FilmCard;
