@@ -1,23 +1,26 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from "prop-types";
 
-const VideoPlayer = ({isPlaying, isMuted = true, src, poster}) => {
+const VideoPlayer = ({isPlaying = true, isMuted = true, src, poster}) => {
   const videoRef = useRef(null);
-  const video = videoRef.current;
 
   useEffect(() => {
+    const video = videoRef.current;
     let timeoutId;
 
     if (isPlaying) {
-      timeoutId = setTimeout(() => video.play(), 1000);
-      return;
+      timeoutId = setTimeout(() => {
+        video.play();
+      }, 1000);
+
     } else {
-      if (video !== null) {
-        video.load();
-      }
+      clearTimeout(timeoutId);
+      video.load();
     }
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [isPlaying]);
 
   return <video
@@ -40,7 +43,6 @@ VideoPlayer.propTypes = {
   isMuted: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
-  isStart: PropTypes.bool.isRequired,
 };
 
 export default VideoPlayer;
