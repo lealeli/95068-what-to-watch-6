@@ -1,15 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import FilmCard from "./FilmCard";
 
 const FilmList = ({films}) => {
-  const [filmId, setFilmId] = useState(null);
 
   return (
     <div className="catalog__movies-list">
       {films.map((elem) => {
-        const setActiveMovie = () => setFilmId(elem.id);
-        const cleanActiveMovie = () => setFilmId(null);
 
         return (
           <FilmCard
@@ -18,10 +15,6 @@ const FilmList = ({films}) => {
             previewImage={elem.preview_image}
             previewVideoLink={elem.preview_video_link}
             id={elem.id}
-            isMuted={filmId === elem.id}
-            isPlaying={filmId === elem.id}
-            onMouseEnter={setActiveMovie}
-            onMouseLeave={cleanActiveMovie}
           />
         );
       })}
