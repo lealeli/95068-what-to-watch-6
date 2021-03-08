@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FilmList from "./FilmList";
+import ListGenre from "./ListGenre";
 import {Link} from "react-router-dom";
+import {connect} from 'react-redux';
 
 const Main = ({promoFilm: {name, gangre, year}, films}) =>
   <>
@@ -64,39 +66,7 @@ const Main = ({promoFilm: {name, gangre, year}, films}) =>
     <div className="page-content">
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-        <ul className="catalog__genres-list">
-          <li className="catalog__genres-item catalog__genres-item--active">
-            <Link to="#" className="catalog__genres-link">All genres</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Comedies</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Crime</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Documentary</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Dramas</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Horror</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Kids & Family</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Romance</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Sci-Fi</Link>
-          </li>
-          <li className="catalog__genres-item">
-            <Link to="#" className="catalog__genres-link">Thrillers</Link>
-          </li>
-        </ul>
+        <ListGenre films={films}/>
 
         <FilmList films={films}/>
 
@@ -126,4 +96,9 @@ Main.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  films: state.films
+});
+
+export {Main};
+export default connect(mapStateToProps)(Main);

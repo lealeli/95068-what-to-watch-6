@@ -7,6 +7,7 @@ import MoviePage from "./MoviePage";
 import AddReview from "./AddReview";
 import Player from "./Player";
 import NotFoundScreen from "./NotFoundScreen";
+import PropTypes from "prop-types";
 
 const App = (props) => {
 
@@ -15,7 +16,7 @@ const App = (props) => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <Main {...props}/>
+            <Main promoFilm={props.promoFilm}/>
           </Route>
           <Route exact path="/login">
             <Login />
@@ -33,6 +34,10 @@ const App = (props) => {
       </BrowserRouter>
     </>
   );
+};
+
+App.propTypes = {
+  promoFilm: PropTypes.object.isRequired,
 };
 
 export default App;
