@@ -1,8 +1,10 @@
 import {ActionType} from './actions';
 import data from '../mocks/data';
 
+export const FILTER_DEFAULT = `All genres`;
+
 const initialState = {
-  genre: `All genres`,
+  genre: FILTER_DEFAULT,
   films: data.films,
 };
 
@@ -13,12 +15,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: action.payload
-      };
-
-    case ActionType.GET_FILMS_BY_GENRE:
-      return {
-        ...state,
-        films: data.films.filter((elem) => (elem.genre === state.genre) || (state.genre === `All genres`))
       };
   }
 

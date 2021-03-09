@@ -5,7 +5,7 @@ import ListGenre from "./ListGenre";
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux';
 
-const Main = ({promoFilm: {name, gangre, year}, films}) =>
+const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
   <>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -66,9 +66,9 @@ const Main = ({promoFilm: {name, gangre, year}, films}) =>
     <div className="page-content">
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <ListGenre films={films}/>
+        <ListGenre />
 
-        <FilmList films={films}/>
+        <FilmList films={preparedFilms}/>
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
@@ -93,12 +93,12 @@ const Main = ({promoFilm: {name, gangre, year}, films}) =>
 
 Main.propTypes = {
   promoFilm: PropTypes.object.isRequired,
-  films: PropTypes.array.isRequired
+  preparedFilms: PropTypes.array.isRequired
 };
-
-const mapStateToProps = (state) => ({
-  films: state.films
-});
+const getPreparedFilms = ({films, genre}) => {
+  return films.filter((elem) => (elem.genre === genre) || (genre === `All genres`));
+};
+const mapStateToProps = ({films, genre}) => ({preparedFilms: getPreparedFilms({films, genre})});
 
 export {Main};
 export default connect(mapStateToProps)(Main);
