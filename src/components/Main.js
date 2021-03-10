@@ -4,9 +4,14 @@ import FilmList from "./FilmList";
 import ListGenre from "./ListGenre";
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux';
+import ShowMore from "./ShowMore";
+import {resetCount} from '../store/actions';
 
-const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
-  <>
+const Main = ({promoFilm: {name, gangre, year}, preparedFilms, count, resetCounter}) => {
+
+  //resetCounter();
+
+  return <>
     <section className="movie-card">
       <div className="movie-card__bg">
         <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
@@ -33,8 +38,7 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218"
-              height="327"/>
+            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
           </div>
 
           <div className="movie-card__desc">
@@ -66,13 +70,11 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
     <div className="page-content">
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <ListGenre />
+        <ListGenre/>
 
-        <FilmList films={preparedFilms}/>
+        <FilmList films={preparedFilms.slice(0, count)}/>
 
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
+        <ShowMore length={preparedFilms.length}/>
       </section>
 
       <footer className="page-footer">
@@ -91,14 +93,24 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
     </div>
   </>;
 
+};
+
 Main.propTypes = {
   promoFilm: PropTypes.object.isRequired,
-  preparedFilms: PropTypes.array.isRequired
+  preparedFilms: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
+  resetCounter: PropTypes.func.isRequired,
 };
 const getPreparedFilms = ({films, genre}) => {
   return films.filter((elem) => (elem.genre === genre) || (genre === `All genres`));
 };
-const mapStateToProps = ({films, genre}) => ({preparedFilms: getPreparedFilms({films, genre})});
+const mapStateToProps = ({films, genre, count}) => ({preparedFilms: getPreparedFilms({films, genre}), count});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetCounter: () => {
+    dispatch(resetCount());
+  },
+});
 
 export {Main};
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
