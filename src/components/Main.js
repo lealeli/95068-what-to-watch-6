@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import FilmList from "./FilmList";
-import ListGenre from "./ListGenre";
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import FilmList from './FilmList';
+import ListGenre from './ListGenre';
+import ShowMore from './ShowMore';
+import {COUNT_FILM_PAGE} from '../store/reducer';
 
-const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
-  <>
+
+const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) => {
+  const [count, setCount] = useState(COUNT_FILM_PAGE);
+
+  return <>
     <section className="movie-card">
       <div className="movie-card__bg">
         <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
@@ -33,8 +38,7 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218"
-              height="327"/>
+            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
           </div>
 
           <div className="movie-card__desc">
@@ -66,13 +70,11 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
     <div className="page-content">
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <ListGenre />
+        <ListGenre/>
 
-        <FilmList films={preparedFilms}/>
+        <FilmList films={preparedFilms.slice(0, count)}/>
 
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
+        <ShowMore length={preparedFilms.length} count={count} onClick={() => setCount((prevState) => prevState + COUNT_FILM_PAGE)}/>
       </section>
 
       <footer className="page-footer">
@@ -91,14 +93,17 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) =>
     </div>
   </>;
 
+};
+
 Main.propTypes = {
   promoFilm: PropTypes.object.isRequired,
-  preparedFilms: PropTypes.array.isRequired
+  preparedFilms: PropTypes.array.isRequired,
 };
 const getPreparedFilms = ({films, genre}) => {
   return films.filter((elem) => (elem.genre === genre) || (genre === `All genres`));
 };
 const mapStateToProps = ({films, genre}) => ({preparedFilms: getPreparedFilms({films, genre})});
+
 
 export {Main};
 export default connect(mapStateToProps)(Main);
