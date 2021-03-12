@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import FilmList from "./FilmList";
-import ListGenre from "./ListGenre";
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import ShowMore from "./ShowMore";
-import {resetCount} from '../store/actions';
+import FilmList from './FilmList';
+import ListGenre from './ListGenre';
+import ShowMore from './ShowMore';
+import {COUNT_FILM_PAGE} from '../store/reducer';
 
-const Main = ({promoFilm: {name, gangre, year}, preparedFilms, count, resetCounter}) => {
 
-  //resetCounter();
+const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) => {
+  const [count, setCount] = useState(COUNT_FILM_PAGE);
 
   return <>
     <section className="movie-card">
@@ -74,7 +74,7 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms, count, resetCount
 
         <FilmList films={preparedFilms.slice(0, count)}/>
 
-        <ShowMore length={preparedFilms.length}/>
+        <ShowMore length={preparedFilms.length} count={count} onClick={() => setCount((prevState) => prevState + COUNT_FILM_PAGE)}/>
       </section>
 
       <footer className="page-footer">
@@ -98,19 +98,12 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms, count, resetCount
 Main.propTypes = {
   promoFilm: PropTypes.object.isRequired,
   preparedFilms: PropTypes.array.isRequired,
-  count: PropTypes.number.isRequired,
-  resetCounter: PropTypes.func.isRequired,
 };
 const getPreparedFilms = ({films, genre}) => {
   return films.filter((elem) => (elem.genre === genre) || (genre === `All genres`));
 };
-const mapStateToProps = ({films, genre, count}) => ({preparedFilms: getPreparedFilms({films, genre}), count});
+const mapStateToProps = ({films, genre}) => ({preparedFilms: getPreparedFilms({films, genre})});
 
-const mapDispatchToProps = (dispatch) => ({
-  resetCounter: () => {
-    dispatch(resetCount());
-  },
-});
 
 export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps)(Main);

@@ -1,6 +1,6 @@
 import React from 'react';
-import FilmList from "./FilmList";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import FilmList from './FilmList';
 
 const MyList = ({films}) => (
   <>

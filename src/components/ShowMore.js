@@ -1,29 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {incLoadFilms} from "../store/actions";
-import {connect} from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const ShowMore = ({length, count, incCount}) => {
+const ShowMore = ({length, count, onClick}) => {
 
-  if (length >= count) {
-    return <div className="catalog__more">
-      <button className="catalog__button" type="button" onClick={() => incCount(8)}>Show more</button>
-    </div>;
+  if (length < count) {
+    return null;
   }
-  return <></>;
+  return <div className="catalog__more">
+    <button className="catalog__button" type="button" onClick={onClick}>Show more</button>
+  </div>;
 };
 
 ShowMore.propTypes = {
   length: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
-  incCount: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({count}) => ({count});
-
-const mapDispatchToProps = (dispatch) => ({
-  incCount: (count) => dispatch(incLoadFilms(count))
-});
-
-export {ShowMore};
-export default connect(mapStateToProps, mapDispatchToProps)(ShowMore);
+export default ShowMore;

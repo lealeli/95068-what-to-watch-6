@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
-import Tab from "./Tab";
-import FilmList from "./FilmList";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+import Tab from './Tab';
+import FilmList from './FilmList';
 
 const MoviePage = ({films = [], match}) => {
   const film = films.find((item) => item.id === Number(match.params.id));

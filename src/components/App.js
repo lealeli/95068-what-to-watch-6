@@ -1,13 +1,13 @@
 import React from 'react';
-import Main from "./Main";
+import Main from './Main';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import Login from "./Login";
-import MyList from "./MyList";
-import MoviePage from "./MoviePage";
-import AddReview from "./AddReview";
-import Player from "./Player";
-import NotFoundScreen from "./NotFoundScreen";
-import PropTypes from "prop-types";
+import Login from './Login';
+import MyList from './MyList';
+import MoviePage from './MoviePage';
+import AddReview from './AddReview';
+import Player from './Player';
+import NotFoundScreen from './NotFoundScreen';
+import PropTypes from 'prop-types';
 
 const App = (props) => {
 

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import TabOverview from './TabOverview';
-import TabDetails from "./TabDetails";
-import TabReviews from "./TabReviews";
+import TabDetails from './TabDetails';
+import TabReviews from './TabReviews';
 
 
 const tabs = [`Overview`, `Details`, `Reviews`];
