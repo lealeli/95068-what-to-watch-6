@@ -1,15 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import FilmList from './FilmList';
 import ListGenre from './ListGenre';
 import ShowMore from './ShowMore';
-import {COUNT_FILM_PAGE} from '../store/reducer';
+import {COUNT_FILM_PAGE} from './const';
+import LoadingScreen from "./loading-screen";
+import {fetchFilmsList} from "../index";
 
 
-const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) => {
+const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onLoadData}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return <>
     <section className="movie-card">
@@ -98,12 +112,19 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms}) => {
 Main.propTypes = {
   promoFilm: PropTypes.object.isRequired,
   preparedFilms: PropTypes.array.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 const getPreparedFilms = ({films, genre}) => {
   return films.filter((elem) => (elem.genre === genre) || (genre === `All genres`));
 };
-const mapStateToProps = ({films, genre}) => ({preparedFilms: getPreparedFilms({films, genre})});
+const mapStateToProps = ({films, genre, isDataLoaded}) => ({preparedFilms: getPreparedFilms({films, genre}), isDataLoaded});
 
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchFilmsList());
+  },
+});
 
 export {Main};
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
