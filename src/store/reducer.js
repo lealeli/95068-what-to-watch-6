@@ -1,10 +1,11 @@
 import {ActionType} from './actions';
-import {FILTER_DEFAULT} from "../components/const";
+import {FILTER_DEFAULT, AuthorizationStatus} from '../components/const';
 
 const initialState = {
   genre: FILTER_DEFAULT,
   films: [],
-  isDataLoaded: false
+  isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
 };
 
 
@@ -21,6 +22,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         films: action.payload,
         isDataLoaded: true
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
       };
   }
   return state;

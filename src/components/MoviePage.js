@@ -6,6 +6,7 @@ import Tab from './Tab';
 import FilmList from './FilmList';
 import LoadingScreen from './loading-screen';
 import {fetchFilmsList} from '../store/api-actions';
+import Auth from "./Auth";
 
 const MoviePage = ({films = [], match, isDataLoaded, onLoadData}) => {
   const film = films.find((item) => item.id === Number(match.params.id));
@@ -41,11 +42,8 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData}) => {
               </Link>
             </div>
 
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </div>
+            <Auth />
+
           </header>
 
           <div className="movie-card__wrap">

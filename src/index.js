@@ -1,26 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStore, applyMiddleware} from 'redux';
-import thunk from "redux-thunk";
+import thunk from 'redux-thunk';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
-import axios from 'axios';
 import App from './components/App';
 import {reducer} from './store/reducer';
 import data from './mocks/data';
+import {checkAuth} from './store/api-actions';
+import {createAPI} from "./store/api";
+import {AuthorizationStatus} from "./components/const";
+import {requireAuthorization} from "./store/actions";
+import {redirect} from "./store/redirect";
 
-const BACKEND_URL = `https://6.react.pages.academy/wtw`;
-const REQUEST_TIMEOUT = 5000;
-
-const api = axios.create({
-  baseURL: BACKEND_URL,
-  timeout: REQUEST_TIMEOUT,
-  withCredentials: true,
-});
+const api = createAPI(
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
+);
 
 const store = createStore(
     reducer,
-    applyMiddleware(thunk.withExtraArgument(api)),
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect))
 );
+
+store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>

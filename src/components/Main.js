@@ -8,6 +8,7 @@ import ShowMore from './ShowMore';
 import {COUNT_FILM_PAGE} from './const';
 import LoadingScreen from './loading-screen';
 import {fetchFilmsList} from '../store/api-actions';
+import Auth from "./Auth";
 
 const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onLoadData}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);
@@ -41,11 +42,8 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onL
           </Link>
         </div>
 
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-          </div>
-        </div>
+        <Auth />
+
       </header>
 
       <div className="movie-card__wrap">
