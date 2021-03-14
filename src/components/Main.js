@@ -6,9 +6,8 @@ import FilmList from './FilmList';
 import ListGenre from './ListGenre';
 import ShowMore from './ShowMore';
 import {COUNT_FILM_PAGE} from './const';
-import LoadingScreen from "./loading-screen";
-import {fetchFilmsList} from "../index";
-
+import LoadingScreen from './loading-screen';
+import {fetchFilmsList} from '../store/api-actions';
 
 const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onLoadData}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);

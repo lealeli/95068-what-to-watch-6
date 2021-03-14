@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 import axios from 'axios';
 import App from './components/App';
 import {reducer} from './store/reducer';
-import {loadFilms} from './store/actions';
 import data from './mocks/data';
 
 const BACKEND_URL = `https://6.react.pages.academy/wtw`;
@@ -17,11 +16,6 @@ const api = axios.create({
   timeout: REQUEST_TIMEOUT,
   withCredentials: true,
 });
-
-export const fetchFilmsList = () => (dispatch, _getState, _api) => (
-  _api.get(`/films`)
-    .then(({data: filmData}) => dispatch(loadFilms(filmData)))
-);
 
 const store = createStore(
     reducer,

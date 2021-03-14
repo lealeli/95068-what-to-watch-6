@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import Tab from './Tab';
 import FilmList from './FilmList';
+import LoadingScreen from './loading-screen';
+import {fetchFilmsList} from '../store/api-actions';
 
-const MoviePage = ({films = [], match}) => {
+const MoviePage = ({films = [], match, isDataLoaded, onLoadData}) => {
   const film = films.find((item) => item.id === Number(match.params.id));
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <>
@@ -101,7 +116,18 @@ const MoviePage = ({films = [], match}) => {
 
 MoviePage.propTypes = {
   films: PropTypes.array.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
-export default MoviePage;
+const mapStateToProps = ({films, isDataLoaded}) => ({films, isDataLoaded});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchFilmsList());
+  },
+});
+
+export {MoviePage};
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
