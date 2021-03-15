@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FilmList from './FilmList';
+import Auth from "./Auth";
 
 const MyList = ({films}) => (
   <>
@@ -16,11 +17,8 @@ const MyList = ({films}) => (
 
         <h1 className="page-title user-page__title">My list</h1>
 
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-          </div>
-        </div>
+        <Auth />
+
       </header>
 
       <section className="catalog">

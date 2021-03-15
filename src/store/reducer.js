@@ -1,12 +1,11 @@
 import {ActionType} from './actions';
-import data from '../mocks/data';
-
-export const FILTER_DEFAULT = `All genres`;
-export const COUNT_FILM_PAGE = 8;
+import {FILTER_DEFAULT, AuthorizationStatus} from '../components/const';
 
 const initialState = {
   genre: FILTER_DEFAULT,
-  films: data.films,
+  films: [],
+  isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
 };
 
 
@@ -16,6 +15,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: action.payload
+      };
+
+    case ActionType.LOAD_FILMS:
+      return {
+        ...state,
+        films: action.payload,
+        isDataLoaded: true
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
       };
   }
   return state;

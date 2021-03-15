@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {changeGenreAction} from '../store/actions';
-import {FILTER_DEFAULT} from "../store/reducer";
+import {FILTER_DEFAULT} from './const';
 
 const ListGenre = ({films, genreActive, changeGenre}) => {
 

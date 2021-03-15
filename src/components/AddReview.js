@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import FormReview from "./FormReview";
+import Auth from "./Auth";
 
 const AddReview = ({films = [], match}) => {
   const film = films.find((item) => item.id === Number(match.params.id));
@@ -36,11 +37,8 @@ const AddReview = ({films = [], match}) => {
               </ul>
             </nav>
 
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </div>
+            <Auth />
+
           </header>
 
           <div className="movie-card__poster movie-card__poster--small">
