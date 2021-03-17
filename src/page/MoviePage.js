@@ -8,8 +8,9 @@ import LoadingScreen from '../components/LoadingScreen';
 import {fetchFilm, fetchFilmsList} from '../store/api-actions';
 import Auth from "../components/Auth";
 import NotFoundScreen from "./NotFoundScreen";
+import {AuthorizationStatus} from "../components/const";
 
-const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, activeMove}) => {
+const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
 
   const filmId = Number(match.params.id);
   const filmLoader = activeMove[filmId];
@@ -80,7 +81,11 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link>
+                {
+                  (authorizationStatus === AuthorizationStatus.AUTH) &&
+                  <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link>
+                }
+
               </div>
             </div>
           </div>
@@ -132,9 +137,10 @@ MoviePage.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   onLoadFilm: PropTypes.func.isRequired,
   activeMove: PropTypes.object.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({films, isDataLoaded, activeMove}) => ({films, isDataLoaded, activeMove});
+const mapStateToProps = ({films, isDataLoaded, activeMove, authorizationStatus}) => ({films, isDataLoaded, activeMove, authorizationStatus});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData: () => dispatch(fetchFilmsList()),

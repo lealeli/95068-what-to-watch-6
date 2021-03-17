@@ -7,6 +7,11 @@ const initialState = {
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   activeMove: {},
+  addReview: {
+    error: ``,
+    isReviewPosting: false,
+    filmId: null,
+  }
 };
 
 
@@ -31,12 +36,22 @@ const reducer = (state = initialState, action) => {
     case ActionType.FINISH_LOAD_FILM:
       return {
         ...state,
-        activeMove: {...state.activeMove, [action.payloadId]: {film: action.payloadFilm, isFetching: false}},
+        activeMove: {...state.activeMove, [action.payload.id]: {film: action.payload.film, isFetching: false}},
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+    case ActionType.START_SEND_COMMENT:
+      return {
+        ...state,
+        addReview: {filmId: action.payload, error: ``, isReviewPosting: true},
+      };
+    case ActionType.FINISH_SEND_COMMENT:
+      return {
+        ...state,
+        addReview: {filmId: action.payload.id, error: action.payload.error, isReviewPosting: false},
       };
   }
   return state;

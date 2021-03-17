@@ -6,6 +6,8 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
   START_LOAD_FILM: `data/startLoadFilm`,
   FINISH_LOAD_FILM: `data/finishLoadFilm`,
+  START_SEND_COMMENT: `data/startSendComment`,
+  FINISH_SEND_COMMENT: `data/finishSendComment`,
 };
 
 export const changeGenreAction = (genre) => ({
@@ -20,8 +22,7 @@ export const loadFilms = (films) => ({
 
 export const finishLoadFilm = (id, film) => ({
   type: ActionType.FINISH_LOAD_FILM,
-  payloadId: id,
-  payloadFilm: film
+  payload: {id, film}
 });
 
 export const startLoadFilm = (id) => ({
@@ -37,4 +38,14 @@ export const requireAuthorization = (status) => ({
 export const redirectToRoute = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url
+});
+
+export const startSendComment = (id) => ({
+  type: ActionType.START_SEND_COMMENT,
+  payload: id,
+});
+
+export const finishSendComment = (id, error) => ({
+  type: ActionType.FINISH_SEND_COMMENT,
+  payload: {id, error},
 });

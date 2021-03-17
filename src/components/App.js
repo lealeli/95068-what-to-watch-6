@@ -24,14 +24,9 @@ const App = (props) => {
           <Route exact path="/login">
             <AuthScreen />
           </Route>
-          <PrivateRoute
-            exact
-            path="/mylist"
-            render={() => <MyList {...props}/>}
-          >
-          </PrivateRoute >
+          <PrivateRoute exact path="/mylist" render={() => <MyList {...props}/> } />
           <Route exact path="/films/:id" render={(prop) => <MoviePage {...props} {...prop}/> } />
-          <Route exact path="/films/:id/review" render={(prop) => <AddReview {...props} {...prop}/> } />
+          <PrivateRoute exact path="/films/:id/review" render={(prop) => <AddReview {...props} {...prop}/> } />
           <Route exact path="/player/:id" render={(prop) => <Player {...props} {...prop}/> } />
           <Route>
             <NotFoundScreen />
