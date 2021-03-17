@@ -1,14 +1,14 @@
 import React from 'react';
-import Main from './Main';
+import Main from '../page/Main';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
-import MyList from './MyList';
-import MoviePage from './MoviePage';
+import MyList from '../page/MyList';
+import MoviePage from '../page/MoviePage';
 import AddReview from './AddReview';
-import Player from './Player';
-import NotFoundScreen from './NotFoundScreen';
+import Player from '../page/Player';
+import NotFoundScreen from '../page/NotFoundScreen';
 import PropTypes from 'prop-types';
 import PrivateRoute from "../private-route/PrivateRoute";
-import AuthScreen from "./AuthScreen";
+import AuthScreen from "../page/AuthScreen";
 import browserHistory from "../store/browser-history";
 
 

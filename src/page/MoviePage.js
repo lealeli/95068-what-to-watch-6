@@ -2,14 +2,17 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import Tab from './Tab';
-import FilmList from './FilmList';
-import LoadingScreen from './loading-screen';
-import {fetchFilmsList} from '../store/api-actions';
-import Auth from "./Auth";
+import Tab from '../components/Tab';
+import FilmList from '../components/FilmList';
+import LoadingScreen from '../components/LoadingScreen';
+import {fetchFilm, fetchFilmsList} from '../store/api-actions';
+import Auth from "../components/Auth";
+import NotFoundScreen from "./NotFoundScreen";
 
-const MoviePage = ({films = [], match, isDataLoaded, onLoadData}) => {
-  const film = films.find((item) => item.id === Number(match.params.id));
+const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, activeMove}) => {
+
+  const filmId = Number(match.params.id);
+  const filmLoader = activeMove[filmId];
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -17,11 +20,21 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData}) => {
     }
   }, [isDataLoaded]);
 
-  if (!isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
+  useEffect(() => {
+    if (!filmLoader) {
+      onLoadFilm(filmId);
+    }
+  });
+
+  if (!isDataLoaded || !filmLoader || filmLoader.isFetching) {
+    return <LoadingScreen />;
   }
+
+  if (!filmLoader.film.id) {
+    return <NotFoundScreen />;
+  }
+
+  const film = filmLoader.film;
 
   return (
     <>
@@ -117,14 +130,15 @@ MoviePage.propTypes = {
   match: PropTypes.object.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  onLoadFilm: PropTypes.func.isRequired,
+  activeMove: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({films, isDataLoaded}) => ({films, isDataLoaded});
+const mapStateToProps = ({films, isDataLoaded, activeMove}) => ({films, isDataLoaded, activeMove});
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchFilmsList());
-  },
+  onLoadData: () => dispatch(fetchFilmsList()),
+  onLoadFilm: (id) => dispatch(fetchFilm(id)),
 });
 
 export {MoviePage};

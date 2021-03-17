@@ -6,6 +6,7 @@ const initialState = {
   films: [],
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  activeMove: {},
 };
 
 
@@ -16,12 +17,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         genre: action.payload
       };
-
     case ActionType.LOAD_FILMS:
       return {
         ...state,
         films: action.payload,
         isDataLoaded: true
+      };
+    case ActionType.START_LOAD_FILM:
+      return {
+        ...state,
+        activeMove: {...state.activeMove, [action.payload]: {film: {}, isFetching: true}},
+      };
+    case ActionType.FINISH_LOAD_FILM:
+      return {
+        ...state,
+        activeMove: {...state.activeMove, [action.payloadId]: {film: action.payloadFilm, isFetching: false}},
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
@@ -31,6 +41,5 @@ const reducer = (state = initialState, action) => {
   }
   return state;
 };
-
 
 export {reducer};

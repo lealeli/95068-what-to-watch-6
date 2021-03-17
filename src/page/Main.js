@@ -2,13 +2,13 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import FilmList from './FilmList';
-import ListGenre from './ListGenre';
-import ShowMore from './ShowMore';
-import {COUNT_FILM_PAGE} from './const';
-import LoadingScreen from './loading-screen';
+import FilmList from '../components/FilmList';
+import ListGenre from '../components/ListGenre';
+import ShowMore from '../components/ShowMore';
+import {COUNT_FILM_PAGE} from '../components/const';
+import LoadingScreen from '../components/LoadingScreen';
 import {fetchFilmsList} from '../store/api-actions';
-import Auth from "./Auth";
+import Auth from "../components/Auth";
 
 const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onLoadData}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);
@@ -117,11 +117,7 @@ const getPreparedFilms = ({films, genre}) => {
 };
 const mapStateToProps = ({films, genre, isDataLoaded}) => ({preparedFilms: getPreparedFilms({films, genre}), isDataLoaded});
 
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchFilmsList());
-  },
-});
+const mapDispatchToProps = (dispatch) => ({onLoadData: () => dispatch(fetchFilmsList())});
 
 export {Main};
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
