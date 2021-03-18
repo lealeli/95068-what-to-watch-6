@@ -2,9 +2,8 @@ import {
   loadFilms,
   redirectToRoute,
   requireAuthorization,
-  finishLoadFilm,
-  startLoadFilm,
-  startSendComment, finishSendComment
+  setFilm,
+  setComment
 } from "./actions";
 import {AuthorizationStatus} from "../components/const";
 import browserHistory from "./browser-history";
@@ -15,13 +14,13 @@ export const fetchFilmsList = () => (dispatch, _getState, _api) => (
 );
 
 export const fetchFilm = (id) => (dispatch, _getState, _api) => {
-  dispatch(startLoadFilm(id));
+  dispatch(setFilm(id, {}, true));
   return _api.get(`/films/${id}`)
     .then((response) => {
-      dispatch(finishLoadFilm(id, response.data));
+      dispatch(setFilm(id, response.data, false));
     })
     .catch(() => {
-      dispatch(finishLoadFilm(id, {}));
+      dispatch(setFilm(id, {}, false));
     });
 };
 
@@ -38,13 +37,13 @@ export const login = ({login: email, password}) => (dispatch, _getState, _api) =
 );
 
 export const sendComment = (id, comment, rating) => (dispatch, _getState, _api) => {
-  dispatch(startSendComment(id));
+  dispatch(setComment(``, true));
   return _api.post(`/comments/${id}`, {comment, rating})
     .then(() => {
-      dispatch(finishSendComment(id, ``));
+      dispatch(setComment(``, false));
       browserHistory.push(`/films/${id}`);
     })
     .catch((error) => {
-      dispatch(finishSendComment(id, error.message));
+      dispatch(setComment(error.message, false));
     });
 };

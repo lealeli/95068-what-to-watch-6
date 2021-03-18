@@ -25,7 +25,7 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
     if (!filmLoader) {
       onLoadFilm(filmId);
     }
-  });
+  }, [filmLoader]);
 
   if (!isDataLoaded || !filmLoader || filmLoader.isFetching) {
     return <LoadingScreen />;

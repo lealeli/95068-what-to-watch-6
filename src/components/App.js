@@ -12,22 +12,22 @@ import AuthScreen from "../page/AuthScreen";
 import browserHistory from "../store/browser-history";
 
 
-const App = (props) => {
+const App = ({promoFilm}) => {
 
   return (
     <>
       <BrowserRouter history={browserHistory}>
         <Switch>
           <Route exact path="/">
-            <Main promoFilm={props.promoFilm}/>
+            <Main promoFilm={promoFilm}/>
           </Route>
           <Route exact path="/login">
             <AuthScreen />
           </Route>
-          <PrivateRoute exact path="/mylist" render={() => <MyList {...props}/> } />
-          <Route exact path="/films/:id" render={(prop) => <MoviePage {...props} {...prop}/> } />
-          <PrivateRoute exact path="/films/:id/review" render={(prop) => <AddReview {...props} {...prop}/> } />
-          <Route exact path="/player/:id" render={(prop) => <Player {...props} {...prop}/> } />
+          <PrivateRoute exact path="/mylist" render={(prop) => <MyList {...prop} />} />
+          <Route exact path="/films/:id" component={MoviePage} />
+          <PrivateRoute exact path="/films/:id/review" render={(prop) => <AddReview {...prop} />} />
+          <Route exact path="/player/:id" component={Player} />
           <Route>
             <NotFoundScreen />
           </Route>

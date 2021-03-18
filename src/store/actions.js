@@ -4,10 +4,8 @@ export const ActionType = {
   LOAD_FILMS: `data/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
-  START_LOAD_FILM: `data/startLoadFilm`,
-  FINISH_LOAD_FILM: `data/finishLoadFilm`,
-  START_SEND_COMMENT: `data/startSendComment`,
-  FINISH_SEND_COMMENT: `data/finishSendComment`,
+  SET_FILM: `data/setFilm`,
+  SET_COMMENT: `data/setComment`,
 };
 
 export const changeGenreAction = (genre) => ({
@@ -20,14 +18,9 @@ export const loadFilms = (films) => ({
   payload: films
 });
 
-export const finishLoadFilm = (id, film) => ({
-  type: ActionType.FINISH_LOAD_FILM,
-  payload: {id, film}
-});
-
-export const startLoadFilm = (id) => ({
-  type: ActionType.START_LOAD_FILM,
-  payload: id
+export const setFilm = (id, film, isFetching) => ({
+  type: ActionType.SET_FILM,
+  payload: {id, film, isFetching}
 });
 
 export const requireAuthorization = (status) => ({
@@ -40,12 +33,7 @@ export const redirectToRoute = (url) => ({
   payload: url
 });
 
-export const startSendComment = (id) => ({
-  type: ActionType.START_SEND_COMMENT,
-  payload: id,
-});
-
-export const finishSendComment = (id, error) => ({
-  type: ActionType.FINISH_SEND_COMMENT,
-  payload: {id, error},
+export const setComment = (error, isReviewPosting) => ({
+  type: ActionType.SET_COMMENT,
+  payload: {error, isReviewPosting},
 });

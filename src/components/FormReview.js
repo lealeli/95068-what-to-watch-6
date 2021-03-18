@@ -71,7 +71,7 @@ const FormReview = ({id, addReview, onSendComment}) => {
 
           </div>
 
-          <div>{addReview.error}</div>
+          {addReview.error && <div>{addReview.error}</div>}
         </form>
       </div>
     </>);
