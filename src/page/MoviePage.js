@@ -9,6 +9,8 @@ import {fetchFilm, fetchFilmsList} from "../store/api-actions";
 import Auth from "../components/Auth";
 import NotFoundScreen from "./NotFoundScreen";
 import {AuthorizationStatus} from "../store/const";
+import {getActiveMove, getFilms, getIsDataLoaded} from "../store/films/selector";
+import {getAuthorizationStatus} from "../store/user/selector";
 
 const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
 
@@ -140,7 +142,7 @@ MoviePage.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({films, isDataLoaded, activeMove, authorizationStatus}) => ({films, isDataLoaded, activeMove, authorizationStatus});
+const mapStateToProps = (state) => ({films: getFilms(state), isDataLoaded: getIsDataLoaded(state), activeMove: getActiveMove(state), authorizationStatus: getAuthorizationStatus(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData: () => dispatch(fetchFilmsList()),

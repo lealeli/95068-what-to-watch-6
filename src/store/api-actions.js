@@ -3,7 +3,8 @@ import {
   redirectToRoute,
   requireAuthorization,
   setFilm,
-  setComment
+  setComment,
+  setPromoFilm
 } from "./actions";
 import {AuthorizationStatus} from "./const";
 import browserHistory from "./browser-history";
@@ -11,6 +12,11 @@ import browserHistory from "./browser-history";
 export const fetchFilmsList = () => (dispatch, _getState, _api) => (
   _api.get(`/films`)
     .then(({data: filmData}) => dispatch(loadFilms(filmData)))
+);
+
+export const fetchPromoFilm = () => (dispatch, _getState, _api) => (
+  _api.get(`/films/promo`)
+    .then(({data: filmData}) => dispatch(setPromoFilm(filmData)))
 );
 
 export const fetchFilm = (id) => (dispatch, _getState, _api) => {

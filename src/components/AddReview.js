@@ -7,6 +7,7 @@ import Auth from "./Auth";
 import LoadingScreen from "./LoadingScreen";
 import {fetchFilm} from "../store/api-actions";
 import NotFoundScreen from "../page/NotFoundScreen";
+import {getActiveMove} from "../store/films/selector";
 
 const AddReview = ({match, onLoadFilm, activeMove}) => {
 
@@ -82,7 +83,7 @@ AddReview.propTypes = {
   activeMove: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({activeMove}) => ({activeMove});
+const mapStateToProps = (state) => ({activeMove: getActiveMove(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadFilm: (id) => dispatch(fetchFilm(id)),

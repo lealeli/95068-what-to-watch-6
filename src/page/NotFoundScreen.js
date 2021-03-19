@@ -6,6 +6,7 @@ import {fetchFilmsList} from "../store/api-actions";
 import {connect} from "react-redux";
 import LoadingScreen from "../components/LoadingScreen";
 import PropTypes from "prop-types";
+import {getFilms, getIsDataLoaded} from "../store/films/selector";
 
 const NotFoundScreen = ({films, isDataLoaded, onLoadData}) => {
 
@@ -69,7 +70,7 @@ NotFoundScreen.propTypes = {
   onLoadData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({films, isDataLoaded}) => ({films, isDataLoaded});
+const mapStateToProps = (state) => ({films: getFilms(state), isDataLoaded: getIsDataLoaded(state)});
 
 const mapDispatchToProps = (dispatch) => ({onLoadData: () => dispatch(fetchFilmsList())});
 

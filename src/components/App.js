@@ -6,20 +6,19 @@ import MoviePage from "../page/MoviePage";
 import AddReview from "./AddReview";
 import Player from "../page/Player";
 import NotFoundScreen from "../page/NotFoundScreen";
-import PropTypes from "prop-types";
 import PrivateRoute from "../private-route/PrivateRoute";
 import AuthScreen from "../page/AuthScreen";
 import browserHistory from "../store/browser-history";
 
 
-const App = ({promoFilm}) => {
+const App = () => {
 
   return (
     <>
       <BrowserRouter history={browserHistory}>
         <Switch>
           <Route exact path="/">
-            <Main promoFilm={promoFilm}/>
+            <Main />
           </Route>
           <Route exact path="/login">
             <AuthScreen />
@@ -35,10 +34,6 @@ const App = ({promoFilm}) => {
       </BrowserRouter>
     </>
   );
-};
-
-App.propTypes = {
-  promoFilm: PropTypes.object.isRequired,
 };
 
 export default App;

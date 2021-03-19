@@ -7,11 +7,18 @@ import ListGenre from "../components/ListGenre";
 import ShowMore from "../components/ShowMore";
 import {COUNT_FILM_PAGE} from "../store/const";
 import LoadingScreen from "../components/LoadingScreen";
-import {fetchFilmsList} from "../store/api-actions";
+import {fetchFilmsList, fetchPromoFilm} from "../store/api-actions";
 import Auth from "../components/Auth";
+import {getIsDataLoaded, getPreparedFilms, getPromoFilm} from "../store/films/selector";
 
-const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onLoadData}) => {
+const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, isDataLoaded, onLoadData}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);
+
+  useEffect(() => {
+    if (!promoFilm.isDataLoaded) {
+      onLoadPromoFilm();
+    }
+  }, [promoFilm.isDataLoaded]);
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -19,7 +26,7 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onL
     }
   }, [isDataLoaded]);
 
-  if (!isDataLoaded) {
+  if (!isDataLoaded || !promoFilm.isDataLoaded) {
     return (
       <LoadingScreen />
     );
@@ -28,7 +35,7 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onL
   return <>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+        <img src={promoFilm.film.background_image} alt={promoFilm.film.name}/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -49,14 +56,14 @@ const Main = ({promoFilm: {name, gangre, year}, preparedFilms, isDataLoaded, onL
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+            <img src={promoFilm.film.poster_image} alt={promoFilm.film.name} width="218" height="327"/>
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{name}</h2>
+            <h2 className="movie-card__title">{promoFilm.film.name}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{gangre}</span>
-              <span className="movie-card__year">{year}</span>
+              <span className="movie-card__genre">{promoFilm.film.genre}</span>
+              <span className="movie-card__year">{promoFilm.film.released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -111,13 +118,19 @@ Main.propTypes = {
   preparedFilms: PropTypes.array.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  onLoadPromoFilm: PropTypes.func.isRequired,
 };
-const getPreparedFilms = ({films, genre}) => {
-  return films.filter((elem) => (elem.genre === genre) || (genre === `All genres`));
-};
-const mapStateToProps = ({films, genre, isDataLoaded}) => ({preparedFilms: getPreparedFilms({films, genre}), isDataLoaded});
 
-const mapDispatchToProps = (dispatch) => ({onLoadData: () => dispatch(fetchFilmsList())});
+const mapStateToProps = (state) => ({
+  promoFilm: getPromoFilm(state),
+  preparedFilms: getPreparedFilms(state),
+  isDataLoaded: getIsDataLoaded(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadPromoFilm: () => dispatch(fetchPromoFilm()),
+  onLoadData: () => dispatch(fetchFilmsList())
+});
 
 export {Main};
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -5,8 +5,7 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
 import App from './components/App';
-import {reducer} from './store/reducer';
-import data from './mocks/data';
+import rootReducer from './store/root-reducer';
 import {checkAuth} from './store/api-actions';
 import {createAPI} from "./store/api";
 import {AuthorizationStatus} from "./store/const";
@@ -18,7 +17,7 @@ const api = createAPI(
 );
 
 const store = createStore(
-    reducer,
+    rootReducer,
     composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument(api)),
         applyMiddleware(redirect))
@@ -29,7 +28,7 @@ store.dispatch(checkAuth());
 ReactDOM.render(
     <Provider store={store}>
       <React.StrictMode>
-        <App promoFilm={data.promoFilm} />
+        <App />
       </React.StrictMode>
     </Provider>,
     document.getElementById(`root`)
