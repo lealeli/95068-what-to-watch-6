@@ -1,7 +1,7 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {AuthorizationStatus} from './const';
+import React from "react";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {AuthorizationStatus} from "../store/const";
 import PropTypes from "prop-types";
 
 const Auth = ({authorizationStatus}) => {

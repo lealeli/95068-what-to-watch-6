@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
 import Auth from "../components/Auth";
 import FilmList from "../components/FilmList";

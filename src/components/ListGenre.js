@@ -1,9 +1,9 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {changeGenreAction} from '../store/actions';
-import {FILTER_DEFAULT} from './const';
+import React from "react";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {changeGenreAction} from "../store/actions";
+import {FILTER_DEFAULT} from "../store/const";
 
 const ListGenre = ({films, genreActive, changeGenre}) => {
 

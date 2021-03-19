@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const getTimeFromMins = (mins) => {
   let hours = Math.trunc(mins / 60);

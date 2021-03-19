@@ -5,7 +5,7 @@ import {
   setFilm,
   setComment
 } from "./actions";
-import {AuthorizationStatus} from "../components/const";
+import {AuthorizationStatus} from "./const";
 import browserHistory from "./browser-history";
 
 export const fetchFilmsList = () => (dispatch, _getState, _api) => (

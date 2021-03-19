@@ -9,7 +9,7 @@ import {reducer} from './store/reducer';
 import data from './mocks/data';
 import {checkAuth} from './store/api-actions';
 import {createAPI} from "./store/api";
-import {AuthorizationStatus} from "./components/const";
+import {AuthorizationStatus} from "./store/const";
 import {requireAuthorization} from "./store/actions";
 import {redirect} from "./store/redirect";
 

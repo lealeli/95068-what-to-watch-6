@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useEffect} from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import FormReview from "./FormReview";
@@ -17,7 +17,7 @@ const AddReview = ({match, onLoadFilm, activeMove}) => {
     if (!filmLoader) {
       onLoadFilm(filmId);
     }
-  });
+  }, [filmLoader]);
 
   if (!filmLoader || filmLoader.isFetching) {
     return <LoadingScreen />;

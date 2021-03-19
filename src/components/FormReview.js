@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import PropTypes from "prop-types";
 import {sendComment} from "../store/api-actions";
 import {connect} from "react-redux";
@@ -15,10 +15,10 @@ const FormReview = ({id, addReview, onSendComment}) => {
     evt.preventDefault();
   };
 
-  const handleFieldChange = (evt) => {
+  const handleFieldChange = useCallback((evt) => {
     const {name, value} = evt.target;
     setReviewForm({...reviewForm, [name]: value});
-  };
+  }, [reviewForm.rating, reviewForm.reviewText]);
 
   useEffect(() => {
     setIsDisabledForm(addReview.isReviewPosting);

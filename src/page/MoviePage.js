@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import Tab from '../components/Tab';
-import FilmList from '../components/FilmList';
-import LoadingScreen from '../components/LoadingScreen';
-import {fetchFilm, fetchFilmsList} from '../store/api-actions';
+import React, {useEffect} from "react";
+import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import Tab from "../components/Tab";
+import FilmList from "../components/FilmList";
+import LoadingScreen from "../components/LoadingScreen";
+import {fetchFilm, fetchFilmsList} from "../store/api-actions";
 import Auth from "../components/Auth";
 import NotFoundScreen from "./NotFoundScreen";
-import {AuthorizationStatus} from "../components/const";
+import {AuthorizationStatus} from "../store/const";
 
 const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
 

@@ -1,5 +1,5 @@
 import {ActionType} from './actions';
-import {FILTER_DEFAULT, AuthorizationStatus} from '../components/const';
+import {FILTER_DEFAULT, AuthorizationStatus} from './const';
 
 const initialState = {
   genre: FILTER_DEFAULT,
