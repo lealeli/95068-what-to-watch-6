@@ -17,7 +17,7 @@ const AddReview = ({match, onLoadFilm, activeMove}) => {
     if (!filmLoader) {
       onLoadFilm(filmId);
     }
-  });
+  }, [filmLoader]);
 
   if (!filmLoader || filmLoader.isFetching) {
     return <LoadingScreen />;
