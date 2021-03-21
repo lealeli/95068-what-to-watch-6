@@ -1,11 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import FormReview from "./FormReview";
 import Auth from "./Auth";
+import LoadingScreen from "./LoadingScreen";
+import {fetchFilm} from "../store/api-actions";
+import NotFoundScreen from "../page/NotFoundScreen";
 
-const AddReview = ({films = [], match}) => {
-  const film = films.find((item) => item.id === Number(match.params.id));
+const AddReview = ({match, onLoadFilm, activeMove}) => {
+
+  const filmId = Number(match.params.id);
+  const filmLoader = activeMove[filmId];
+
+  useEffect(() => {
+    if (!filmLoader) {
+      onLoadFilm(filmId);
+    }
+  }, [filmLoader]);
+
+  if (!filmLoader || filmLoader.isFetching) {
+    return <LoadingScreen />;
+  }
+
+  if (!filmLoader.film.id) {
+    return <NotFoundScreen />;
+  }
+
+  const film = filmLoader.film;
 
   return (
     <>
@@ -47,7 +69,7 @@ const AddReview = ({films = [], match}) => {
           </div>
         </div>
 
-        <FormReview/>
+        <FormReview id={film.id}/>
 
       </section>
     </>
@@ -55,8 +77,16 @@ const AddReview = ({films = [], match}) => {
 };
 
 AddReview.propTypes = {
-  films: PropTypes.array.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  onLoadFilm: PropTypes.func.isRequired,
+  activeMove: PropTypes.object.isRequired,
 };
 
-export default AddReview;
+const mapStateToProps = ({activeMove}) => ({activeMove});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadFilm: (id) => dispatch(fetchFilm(id)),
+});
+
+export {AddReview};
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

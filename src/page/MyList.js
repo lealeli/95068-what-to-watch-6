@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FilmList from './FilmList';
-import Auth from "./Auth";
+import FilmList from '../components/FilmList';
+import Auth from "../components/Auth";
 
 const MyList = ({films}) => (
   <>
