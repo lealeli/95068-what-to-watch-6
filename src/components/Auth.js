@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AuthorizationStatus} from "../store/const";
@@ -27,4 +27,4 @@ Auth.propTypes = {
 const mapStateToProps = (state) => ({authorizationStatus: getAuthorizationStatus(state)});
 
 export {Auth};
-export default connect(mapStateToProps)(Auth);
+export default connect(mapStateToProps)(memo(Auth));

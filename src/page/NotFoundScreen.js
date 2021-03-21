@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, memo} from "react";
 import {Link} from "react-router-dom";
 import Auth from "../components/Auth";
 import FilmList from "../components/FilmList";
@@ -76,4 +76,4 @@ const mapDispatchToProps = (dispatch) => ({onLoadData: () => dispatch(fetchFilms
 
 export {NotFoundScreen};
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotFoundScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(NotFoundScreen));

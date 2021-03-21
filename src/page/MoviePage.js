@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, memo} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
@@ -150,4 +150,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {MoviePage};
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(MoviePage));

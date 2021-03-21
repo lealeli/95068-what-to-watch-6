@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, memo} from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -90,4 +90,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {AddReview};
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(AddReview));

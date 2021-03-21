@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, memo} from 'react';
 import PropTypes from "prop-types";
 import {sendComment} from "../store/api-actions";
 import {connect} from "react-redux";
@@ -92,4 +92,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {FormReview};
-export default connect(mapStateToProps, mapDispatchToProps)(FormReview);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(FormReview));
