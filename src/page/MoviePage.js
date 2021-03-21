@@ -9,19 +9,19 @@ import {fetchFilm, fetchFilmsList} from "../store/api-actions";
 import Auth from "../components/Auth";
 import NotFoundScreen from "./NotFoundScreen";
 import {AuthorizationStatus} from "../store/const";
-import {getActiveMove, getFilms, getIsDataLoaded} from "../store/films/selector";
+import {getActiveMove, getFilmList} from "../store/films/selector";
 import {getAuthorizationStatus} from "../store/user/selector";
 
-const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
+const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
 
   const filmId = Number(match.params.id);
   const filmLoader = activeMove[filmId];
 
   useEffect(() => {
-    if (!isDataLoaded) {
+    if (!filmList.isDataLoaded) {
       onLoadData();
     }
-  }, [isDataLoaded]);
+  }, [filmList.isDataLoaded]);
 
   useEffect(() => {
     if (!filmLoader) {
@@ -29,7 +29,7 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
     }
   }, [filmLoader]);
 
-  if (!isDataLoaded || !filmLoader || filmLoader.isFetching) {
+  if (!filmList.isDataLoaded || !filmLoader || filmLoader.isFetching) {
     return <LoadingScreen />;
   }
 
@@ -110,7 +110,7 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={films.filter((elem) => (elem.genre === film.genre) && (elem.id !== film.id)).slice(0, 4)}/>
+          <FilmList films={filmList.films.filter((elem) => (elem.genre === film.genre) && (elem.id !== film.id)).slice(0, 4)}/>
 
         </section>
 
@@ -133,16 +133,15 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
 };
 
 MoviePage.propTypes = {
-  films: PropTypes.array.isRequired,
+  filmList: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onLoadFilm: PropTypes.func.isRequired,
   activeMove: PropTypes.object.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({films: getFilms(state), isDataLoaded: getIsDataLoaded(state), activeMove: getActiveMove(state), authorizationStatus: getAuthorizationStatus(state)});
+const mapStateToProps = (state) => ({filmList: getFilmList(state), activeMove: getActiveMove(state), authorizationStatus: getAuthorizationStatus(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData: () => dispatch(fetchFilmsList()),

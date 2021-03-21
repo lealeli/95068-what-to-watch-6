@@ -9,9 +9,9 @@ import {COUNT_FILM_PAGE} from "../store/const";
 import LoadingScreen from "../components/LoadingScreen";
 import {fetchFilmsList, fetchPromoFilm} from "../store/api-actions";
 import Auth from "../components/Auth";
-import {getIsDataLoaded, getPreparedFilms, getPromoFilm} from "../store/films/selector";
+import {getPreparedFilms, getPromoFilm} from "../store/films/selector";
 
-const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, isDataLoaded, onLoadData}) => {
+const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);
 
   useEffect(() => {
@@ -21,12 +21,12 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, isDataLoaded, onLoadDa
   }, [promoFilm.isDataLoaded]);
 
   useEffect(() => {
-    if (!isDataLoaded) {
+    if (!preparedFilms.isDataLoaded) {
       onLoadData();
     }
-  }, [isDataLoaded]);
+  }, [preparedFilms.isDataLoaded]);
 
-  if (!isDataLoaded || !promoFilm.isDataLoaded) {
+  if (!preparedFilms.isDataLoaded || !promoFilm.isDataLoaded) {
     return (
       <LoadingScreen />
     );
@@ -90,9 +90,9 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, isDataLoaded, onLoadDa
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <ListGenre/>
 
-        <FilmList films={preparedFilms.slice(0, count)}/>
+        <FilmList films={preparedFilms.films.slice(0, count)}/>
 
-        <ShowMore length={preparedFilms.length} count={count} onClick={() => setCount((prevState) => prevState + COUNT_FILM_PAGE)}/>
+        <ShowMore length={preparedFilms.films.length} count={count} onClick={() => setCount((prevState) => prevState + COUNT_FILM_PAGE)}/>
       </section>
 
       <footer className="page-footer">
@@ -115,8 +115,7 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, isDataLoaded, onLoadDa
 
 Main.propTypes = {
   promoFilm: PropTypes.object.isRequired,
-  preparedFilms: PropTypes.array.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
+  preparedFilms: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onLoadPromoFilm: PropTypes.func.isRequired,
 };
@@ -124,7 +123,6 @@ Main.propTypes = {
 const mapStateToProps = (state) => ({
   promoFilm: getPromoFilm(state),
   preparedFilms: getPreparedFilms(state),
-  isDataLoaded: getIsDataLoaded(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

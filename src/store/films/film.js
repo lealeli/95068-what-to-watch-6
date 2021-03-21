@@ -3,8 +3,10 @@ import {FILTER_DEFAULT} from '../const';
 
 const initialState = {
   genre: FILTER_DEFAULT,
-  films: [],
-  isDataLoaded: false,
+  filmList: {
+    films: [],
+    isDataLoaded: false,
+  },
   activeMove: {},
   addReview: {
     error: ``,
@@ -27,8 +29,7 @@ const film = (state = initialState, action) => {
     case ActionType.LOAD_FILMS:
       return {
         ...state,
-        films: action.payload,
-        isDataLoaded: true
+        filmList: {films: action.payload, isDataLoaded: true},
       };
     case ActionType.SET_PROMO_FILM:
       return {
