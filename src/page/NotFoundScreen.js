@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, memo} from "react";
 import {Link} from "react-router-dom";
 import Auth from "../components/Auth";
 import FilmList from "../components/FilmList";
@@ -6,16 +6,17 @@ import {fetchFilmsList} from "../store/api-actions";
 import {connect} from "react-redux";
 import LoadingScreen from "../components/LoadingScreen";
 import PropTypes from "prop-types";
+import {getFilmList} from "../store/films/selector";
 
-const NotFoundScreen = ({films, isDataLoaded, onLoadData}) => {
+const NotFoundScreen = ({filmList, onLoadData}) => {
 
   useEffect(() => {
-    if (!isDataLoaded) {
+    if (!filmList.isDataLoaded) {
       onLoadData();
     }
-  }, [isDataLoaded]);
+  }, [filmList.isDataLoaded]);
 
-  if (!isDataLoaded) {
+  if (!filmList.isDataLoaded) {
     return (
       <LoadingScreen />
     );
@@ -41,7 +42,7 @@ const NotFoundScreen = ({films, isDataLoaded, onLoadData}) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          <FilmList films={films.slice(0, 8)}/>
+          <FilmList films={filmList.films.slice(0, 8)}/>
         </div>
 
       </section>
@@ -64,15 +65,14 @@ const NotFoundScreen = ({films, isDataLoaded, onLoadData}) => {
 };
 
 NotFoundScreen.propTypes = {
-  films: PropTypes.array.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
+  filmList: PropTypes.array.isRequired,
   onLoadData: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({films, isDataLoaded}) => ({films, isDataLoaded});
+const mapStateToProps = (state) => ({filmList: getFilmList(state)});
 
 const mapDispatchToProps = (dispatch) => ({onLoadData: () => dispatch(fetchFilmsList())});
 
 export {NotFoundScreen};
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotFoundScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(NotFoundScreen));

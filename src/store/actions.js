@@ -1,11 +1,12 @@
 export const ActionType = {
   CHANGE_GENRE: `film/changeGenre`,
   GET_FILMS_BY_GENRE: `film/getFilmsByGenre`,
-  LOAD_FILMS: `data/loadFilms`,
+  LOAD_FILMS: `film/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
-  SET_FILM: `data/setFilm`,
-  SET_COMMENT: `data/setComment`,
+  SET_FILM: `film/setFilm`,
+  SET_COMMENT: `film/setComment`,
+  SET_PROMO_FILM: `film/setPromoFilm`
 };
 
 export const changeGenreAction = (genre) => ({
@@ -36,4 +37,9 @@ export const redirectToRoute = (url) => ({
 export const setComment = (error, isReviewPosting) => ({
   type: ActionType.SET_COMMENT,
   payload: {error, isReviewPosting},
+});
+
+export const setPromoFilm = (film) => ({
+  type: ActionType.SET_PROMO_FILM,
+  payload: film
 });

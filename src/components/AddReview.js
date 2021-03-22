@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useEffect, memo} from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import FormReview from "./FormReview";
@@ -7,6 +7,7 @@ import Auth from "./Auth";
 import LoadingScreen from "./LoadingScreen";
 import {fetchFilm} from "../store/api-actions";
 import NotFoundScreen from "../page/NotFoundScreen";
+import {getActiveMove} from "../store/films/selector";
 
 const AddReview = ({match, onLoadFilm, activeMove}) => {
 
@@ -82,11 +83,11 @@ AddReview.propTypes = {
   activeMove: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({activeMove}) => ({activeMove});
+const mapStateToProps = (state) => ({activeMove: getActiveMove(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadFilm: (id) => dispatch(fetchFilm(id)),
 });
 
 export {AddReview};
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(AddReview));

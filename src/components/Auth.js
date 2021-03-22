@@ -1,8 +1,9 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {AuthorizationStatus} from './const';
+import React, {memo} from "react";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {AuthorizationStatus} from "../store/const";
 import PropTypes from "prop-types";
+import {getAuthorizationStatus} from "../store/user/selector";
 
 const Auth = ({authorizationStatus}) => {
 
@@ -23,7 +24,7 @@ Auth.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({authorizationStatus}) => ({authorizationStatus});
+const mapStateToProps = (state) => ({authorizationStatus: getAuthorizationStatus(state)});
 
 export {Auth};
-export default connect(mapStateToProps)(Auth);
+export default connect(mapStateToProps)(memo(Auth));

@@ -1,25 +1,27 @@
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import Tab from '../components/Tab';
-import FilmList from '../components/FilmList';
-import LoadingScreen from '../components/LoadingScreen';
-import {fetchFilm, fetchFilmsList} from '../store/api-actions';
+import React, {useEffect, memo} from "react";
+import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import Tab from "../components/Tab";
+import FilmList from "../components/FilmList";
+import LoadingScreen from "../components/LoadingScreen";
+import {fetchFilm, fetchFilmsList} from "../store/api-actions";
 import Auth from "../components/Auth";
 import NotFoundScreen from "./NotFoundScreen";
-import {AuthorizationStatus} from "../components/const";
+import {AuthorizationStatus} from "../store/const";
+import {getActiveMove, getFilmList} from "../store/films/selector";
+import {getAuthorizationStatus} from "../store/user/selector";
 
-const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
+const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
 
   const filmId = Number(match.params.id);
   const filmLoader = activeMove[filmId];
 
   useEffect(() => {
-    if (!isDataLoaded) {
+    if (!filmList.isDataLoaded) {
       onLoadData();
     }
-  }, [isDataLoaded]);
+  }, [filmList.isDataLoaded]);
 
   useEffect(() => {
     if (!filmLoader) {
@@ -27,7 +29,7 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
     }
   }, [filmLoader]);
 
-  if (!isDataLoaded || !filmLoader || filmLoader.isFetching) {
+  if (!filmList.isDataLoaded || !filmLoader || filmLoader.isFetching) {
     return <LoadingScreen />;
   }
 
@@ -108,7 +110,7 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={films.filter((elem) => (elem.genre === film.genre) && (elem.id !== film.id)).slice(0, 4)}/>
+          <FilmList films={filmList.films.filter((elem) => (elem.genre === film.genre) && (elem.id !== film.id)).slice(0, 4)}/>
 
         </section>
 
@@ -131,16 +133,15 @@ const MoviePage = ({films = [], match, isDataLoaded, onLoadData, onLoadFilm, act
 };
 
 MoviePage.propTypes = {
-  films: PropTypes.array.isRequired,
+  filmList: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onLoadFilm: PropTypes.func.isRequired,
   activeMove: PropTypes.object.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({films, isDataLoaded, activeMove, authorizationStatus}) => ({films, isDataLoaded, activeMove, authorizationStatus});
+const mapStateToProps = (state) => ({filmList: getFilmList(state), activeMove: getActiveMove(state), authorizationStatus: getAuthorizationStatus(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData: () => dispatch(fetchFilmsList()),
@@ -148,4 +149,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {MoviePage};
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(MoviePage));

@@ -1,20 +1,25 @@
-import {ActionType} from './actions';
-import {FILTER_DEFAULT, AuthorizationStatus} from '../components/const';
+import {ActionType} from '../actions';
+import {FILTER_DEFAULT} from '../const';
 
 const initialState = {
   genre: FILTER_DEFAULT,
-  films: [],
-  isDataLoaded: false,
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  filmList: {
+    films: [],
+    isDataLoaded: false,
+  },
   activeMove: {},
   addReview: {
     error: ``,
     isReviewPosting: false,
-  }
+  },
+  promoFilm: {
+    film: {},
+    isDataLoaded: false,
+  },
 };
 
 
-const reducer = (state = initialState, action) => {
+const film = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_GENRE:
       return {
@@ -24,18 +29,17 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_FILMS:
       return {
         ...state,
-        films: action.payload,
-        isDataLoaded: true
+        filmList: {films: action.payload, isDataLoaded: true},
+      };
+    case ActionType.SET_PROMO_FILM:
+      return {
+        ...state,
+        promoFilm: {film: action.payload, isDataLoaded: true},
       };
     case ActionType.SET_FILM:
       return {
         ...state,
         activeMove: {...state.activeMove, [action.payload.id]: {film: action.payload.film, isFetching: action.payload.isFetching}},
-      };
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
       };
     case ActionType.SET_COMMENT:
       return {
@@ -46,4 +50,5 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {reducer};
+export {film};
+

@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
-import VideoPlayer from './VideoPlayer';
+import React, {useState, memo} from "react";
+import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import VideoPlayer from "./VideoPlayer";
 
 const FilmCard = ({name, previewImage, previewVideoLink, id}) => {
 
@@ -32,4 +32,4 @@ FilmCard.propTypes = {
 
 };
 
-export default FilmCard;
+export default memo(FilmCard);

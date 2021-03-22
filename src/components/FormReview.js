@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback, memo} from 'react';
 import PropTypes from "prop-types";
 import {sendComment} from "../store/api-actions";
 import {connect} from "react-redux";
+import {getAddReview} from "../store/films/selector";
 
 const FormReview = ({id, addReview, onSendComment}) => {
   const [reviewForm, setReviewForm] = useState({
@@ -13,12 +14,13 @@ const FormReview = ({id, addReview, onSendComment}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    onSendComment(id, reviewForm.reviewText, reviewForm.rating);
   };
 
-  const handleFieldChange = (evt) => {
+  const handleFieldChange = useCallback((evt) => {
     const {name, value} = evt.target;
     setReviewForm({...reviewForm, [name]: value});
-  };
+  }, [reviewForm.rating, reviewForm.reviewText]);
 
   useEffect(() => {
     setIsDisabledForm(addReview.isReviewPosting);
@@ -63,10 +65,10 @@ const FormReview = ({id, addReview, onSendComment}) => {
           </div>
 
           <div className="add-review__text">
-            <textarea className="add-review__textarea" onChange={handleFieldChange} name="reviewText" id="review-text"
+            <textarea className="add-review__textarea" onChange={handleFieldChange} name="reviewText" id="review-text" minLength="50" maxLength="500"
               placeholder="Review text" disabled={isDisabledForm}/>
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit" onClick={() => onSendComment(id, reviewForm.reviewText, reviewForm.rating)} disabled={isDisabledForm}>Post</button>
+              <button className="add-review__btn" type="submit" disabled={isDisabledForm}>Post</button>
             </div>
 
           </div>
@@ -83,11 +85,11 @@ FormReview.propTypes = {
   onSendComment: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({addReview}) => ({addReview});
+const mapStateToProps = (state) => ({addReview: getAddReview(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onSendComment: (id, comment, rating) => dispatch(sendComment(id, comment, rating))
 });
 
 export {FormReview};
-export default connect(mapStateToProps, mapDispatchToProps)(FormReview);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(FormReview));
