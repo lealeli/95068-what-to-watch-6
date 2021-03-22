@@ -10,6 +10,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import {fetchFilmsList, fetchPromoFilm} from "../store/api-actions";
 import Auth from "../components/Auth";
 import {getPreparedFilms, getPromoFilm} from "../store/films/selector";
+import browserHistory from "../store/browser-history";
 
 const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);
@@ -67,7 +68,7 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData}) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
+              <button className="btn btn--play movie-card__button" type="button" onClick={() => browserHistory.push(`/player/${promoFilm.film.id}`)}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"/>
                 </svg>
