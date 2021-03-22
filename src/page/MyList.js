@@ -1,18 +1,26 @@
 import React from "react";
-import PropTypes from "prop-types";
 import FilmList from "../components/FilmList";
 import Auth from "../components/Auth";
+import LoadingScreen from "../components/LoadingScreen";
+import {Link} from "react-router-dom";
+import {useApi} from "../store/api-hook";
 
-const MyList = ({films}) => (
-  <>
+const MyList = () => {
+  const [myList, isLoading] = useApi(`/favorite`);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  return <>
     <div className="user-page">
       <header className="page-header user-page__head">
         <div className="logo">
-          <a href="main.html" className="logo__link">
+          <Link to="/" className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          </Link>
         </div>
 
         <h1 className="page-title user-page__title">My list</h1>
@@ -24,16 +32,16 @@ const MyList = ({films}) => (
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList films={films}/>
+        <FilmList films={myList}/>
       </section>
 
       <footer className="page-footer">
         <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
+          <Link to="/" className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          </Link>
         </div>
 
         <div className="copyright">
@@ -41,11 +49,11 @@ const MyList = ({films}) => (
         </div>
       </footer>
     </div>
-  </>
-);
+  </>;
+};
 
 MyList.propTypes = {
-  films: PropTypes.array.isRequired
+
 };
 
 export default MyList;

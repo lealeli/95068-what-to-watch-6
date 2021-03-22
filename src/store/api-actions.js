@@ -53,3 +53,7 @@ export const sendComment = (id, comment, rating) => (dispatch, _getState, _api) 
       dispatch(setComment(error.message, false));
     });
 };
+
+export const setFavoriteStatus = (id, status) => (dispatch, _getState, _api) => {
+  return _api.post(`/favorite/${id}/${status ? 1 : 0}`);
+};

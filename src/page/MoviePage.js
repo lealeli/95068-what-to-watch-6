@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import Tab from "../components/Tab";
 import FilmList from "../components/FilmList";
 import LoadingScreen from "../components/LoadingScreen";
-import {fetchFilm, fetchFilmsList} from "../store/api-actions";
+import {fetchFilm, fetchFilmsList, setFavoriteStatus} from "../store/api-actions";
 import Auth from "../components/Auth";
 import NotFoundScreen from "./NotFoundScreen";
 import {AuthorizationStatus} from "../store/const";
@@ -13,7 +13,7 @@ import {getActiveMove, getFilmList} from "../store/films/selector";
 import {getAuthorizationStatus} from "../store/user/selector";
 import browserHistory from "../store/browser-history";
 
-const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authorizationStatus}) => {
+const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authorizationStatus, onSetFavoriteStatus}) => {
 
   const filmId = Number(match.params.id);
   const filmLoader = activeMove[filmId];
@@ -78,12 +78,16 @@ const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authori
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                {
+                  (authorizationStatus === AuthorizationStatus.AUTH) &&
+                  <button className="btn btn--list movie-card__button" type="button"
+                    onClick={() => onSetFavoriteStatus(film.id, true)}>
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"/>
+                    </svg>
+                    <span>My list</span>
+                  </button>
+                }
                 {
                   (authorizationStatus === AuthorizationStatus.AUTH) &&
                   <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link>
@@ -138,15 +142,21 @@ MoviePage.propTypes = {
   match: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onLoadFilm: PropTypes.func.isRequired,
+  onSetFavoriteStatus: PropTypes.func.isRequired,
   activeMove: PropTypes.object.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({filmList: getFilmList(state), activeMove: getActiveMove(state), authorizationStatus: getAuthorizationStatus(state)});
+const mapStateToProps = (state) => ({
+  filmList: getFilmList(state),
+  activeMove: getActiveMove(state),
+  authorizationStatus: getAuthorizationStatus(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData: () => dispatch(fetchFilmsList()),
   onLoadFilm: (id) => dispatch(fetchFilm(id)),
+  onSetFavoriteStatus: (id, status) => dispatch(setFavoriteStatus(id, status)),
 });
 
 export {MoviePage};

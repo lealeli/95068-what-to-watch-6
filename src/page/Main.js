@@ -5,14 +5,15 @@ import {connect} from "react-redux";
 import FilmList from "../components/FilmList";
 import ListGenre from "../components/ListGenre";
 import ShowMore from "../components/ShowMore";
-import {COUNT_FILM_PAGE} from "../store/const";
+import {AuthorizationStatus, COUNT_FILM_PAGE} from "../store/const";
 import LoadingScreen from "../components/LoadingScreen";
-import {fetchFilmsList, fetchPromoFilm} from "../store/api-actions";
+import {fetchFilmsList, fetchPromoFilm, setFavoriteStatus} from "../store/api-actions";
 import Auth from "../components/Auth";
 import {getPreparedFilms, getPromoFilm} from "../store/films/selector";
 import browserHistory from "../store/browser-history";
+import {getAuthorizationStatus} from "../store/user/selector";
 
-const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData}) => {
+const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData, onSetFavoriteStatus, authorizationStatus}) => {
   const [count, setCount] = useState(COUNT_FILM_PAGE);
 
   useEffect(() => {
@@ -74,12 +75,16 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData}) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"/>
-                </svg>
-                <span>My list</span>
-              </button>
+              {
+                (authorizationStatus === AuthorizationStatus.AUTH) &&
+                <button className="btn btn--list movie-card__button" type="button"
+                  onClick={() => onSetFavoriteStatus(promoFilm.film.id, true)}>
+                  <svg viewBox="0 0 19 20" width="19" height="20">
+                    <use xlinkHref="#add"/>
+                  </svg>
+                  <span>My list</span>
+                </button>
+              }
             </div>
           </div>
         </div>
@@ -119,16 +124,20 @@ Main.propTypes = {
   preparedFilms: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onLoadPromoFilm: PropTypes.func.isRequired,
+  onSetFavoriteStatus: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   promoFilm: getPromoFilm(state),
   preparedFilms: getPreparedFilms(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadPromoFilm: () => dispatch(fetchPromoFilm()),
-  onLoadData: () => dispatch(fetchFilmsList())
+  onLoadData: () => dispatch(fetchFilmsList()),
+  onSetFavoriteStatus: (id, status) => dispatch(setFavoriteStatus(id, status)),
 });
 
 export {Main};
