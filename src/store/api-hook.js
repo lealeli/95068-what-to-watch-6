@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
 import {createAPI} from "./api";
 
-const api = createAPI(() => {
-});
+const api = createAPI();
 
 export const useApi = (url) => {
   const [data, setData] = useState(null);

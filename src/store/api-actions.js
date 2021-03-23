@@ -55,5 +55,5 @@ export const sendComment = (id, comment, rating) => (dispatch, _getState, _api) 
 };
 
 export const setFavoriteStatus = (id, status) => (dispatch, _getState, _api) => {
-  return _api.post(`/favorite/${id}/${status ? 1 : 0}`);
+  return _api.post(`/favorite/${id}/${status}`);
 };

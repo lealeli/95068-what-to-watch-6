@@ -46,7 +46,7 @@ const Player = ({match, onLoadFilm, activeMove}) => {
 
   useEffect(() => {
     if (!isPlaying) {
-      return () => {};
+      return null;
     }
 
     const tick = setInterval(ticker, 1000);

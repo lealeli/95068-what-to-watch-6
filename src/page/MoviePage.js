@@ -8,7 +8,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import {fetchFilm, fetchFilmsList, setFavoriteStatus} from "../store/api-actions";
 import Auth from "../components/Auth";
 import NotFoundScreen from "./NotFoundScreen";
-import {AuthorizationStatus} from "../store/const";
+import {AuthorizationStatus, FavoriteStatus} from "../store/const";
 import {getActiveMove, getFilmList} from "../store/films/selector";
 import {getAuthorizationStatus} from "../store/user/selector";
 import browserHistory from "../store/browser-history";
@@ -39,6 +39,7 @@ const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authori
   }
 
   const film = filmLoader.film;
+  const handleOnSetFavoriteStatus = () => onSetFavoriteStatus(film.id, FavoriteStatus.ADD);
 
   return (
     <>
@@ -81,7 +82,7 @@ const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authori
                 {
                   (authorizationStatus === AuthorizationStatus.AUTH) &&
                   <button className="btn btn--list movie-card__button" type="button"
-                    onClick={() => onSetFavoriteStatus(film.id, true)}>
+                    onClick={handleOnSetFavoriteStatus}>
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"/>
                     </svg>

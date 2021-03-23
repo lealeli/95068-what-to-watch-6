@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import FilmList from "../components/FilmList";
 import ListGenre from "../components/ListGenre";
 import ShowMore from "../components/ShowMore";
-import {AuthorizationStatus, COUNT_FILM_PAGE} from "../store/const";
+import {AuthorizationStatus, COUNT_FILM_PAGE, FavoriteStatus} from "../store/const";
 import LoadingScreen from "../components/LoadingScreen";
 import {fetchFilmsList, fetchPromoFilm, setFavoriteStatus} from "../store/api-actions";
 import Auth from "../components/Auth";
@@ -33,6 +33,8 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData, onSetFavor
       <LoadingScreen />
     );
   }
+
+  const handleOnSetFavoriteStatus = () => onSetFavoriteStatus(promoFilm.film.id, FavoriteStatus.ADD);
 
   return <>
     <section className="movie-card">
@@ -78,7 +80,7 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData, onSetFavor
               {
                 (authorizationStatus === AuthorizationStatus.AUTH) &&
                 <button className="btn btn--list movie-card__button" type="button"
-                  onClick={() => onSetFavoriteStatus(promoFilm.film.id, true)}>
+                  onClick={handleOnSetFavoriteStatus}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"/>
                   </svg>
