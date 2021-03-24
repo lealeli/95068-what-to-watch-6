@@ -21,7 +21,9 @@ export const createAPI = (onUnauthorized) => {
     const {response} = err;
 
     if (response.status === HttpCode.UNAUTHORIZED) {
-      onUnauthorized();
+      if (onUnauthorized) {
+        onUnauthorized();
+      }
 
       // Бросаем ошибку, потому что нам важно прервать цепочку промисов после запроса авторизации.
       // Запрос авторизации — это особый случай и важно дать понять приложению, что запрос был неудачным.

@@ -10,7 +10,9 @@ const Auth = ({authorizationStatus}) => {
   if (authorizationStatus === AuthorizationStatus.AUTH) {
     return <div className="user-block">
       <div className="user-block__avatar">
-        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+        <Link to="/mylist" className="user-block__link">
+          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+        </Link>
       </div>
     </div>;
   }
