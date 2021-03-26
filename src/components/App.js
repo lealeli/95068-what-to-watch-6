@@ -14,19 +14,13 @@ const App = () => {
   return (
     <>
       <Switch>
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Route exact path="/login">
-          <AuthScreen />
-        </Route>
+        <Route exact path="/" component={Main} />
+        <Route exact path="/login" component={AuthScreen} />
         <PrivateRoute exact path="/mylist" render={(prop) => <MyList {...prop} />} />
         <Route exact path="/films/:id" component={MoviePage} />
         <PrivateRoute exact path="/films/:id/review" render={(prop) => <AddReview {...prop} />} />
         <Route exact path="/player/:id" component={Player} />
-        <Route>
-          <NotFoundScreen />
-        </Route>
+        <Route component={NotFoundScreen} />
       </Switch>
     </>
   );
