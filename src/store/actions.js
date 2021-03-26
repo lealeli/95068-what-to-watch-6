@@ -1,6 +1,5 @@
 export const ActionType = {
   CHANGE_GENRE: `film/changeGenre`,
-  GET_FILMS_BY_GENRE: `film/getFilmsByGenre`,
   LOAD_FILMS: `film/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,

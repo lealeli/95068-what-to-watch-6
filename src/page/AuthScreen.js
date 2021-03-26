@@ -44,6 +44,7 @@ const AuthScreen = ({onSubmit}) => {
                 type="text"
                 name="user-email"
                 id="user-email"
+                data-testid="email"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -55,6 +56,7 @@ const AuthScreen = ({onSubmit}) => {
                 type="password"
                 name="user-password"
                 id="user-password"
+                data-testid="password"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

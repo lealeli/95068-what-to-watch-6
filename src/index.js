@@ -11,6 +11,8 @@ import {createAPI} from "./store/api";
 import {AuthorizationStatus} from "./store/const";
 import {requireAuthorization} from "./store/actions";
 import {redirect} from "./store/redirect";
+import browserHistory from "./store/browser-history";
+import {Router as BrowserRouter} from "react-router-dom";
 
 const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -28,7 +30,9 @@ store.dispatch(checkAuth());
 ReactDOM.render(
     <Provider store={store}>
       <React.StrictMode>
-        <App />
+        <BrowserRouter history={browserHistory}>
+          <App />
+        </BrowserRouter>
       </React.StrictMode>
     </Provider>,
     document.getElementById(`root`)
