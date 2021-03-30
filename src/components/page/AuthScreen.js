@@ -1,9 +1,16 @@
 import React, {memo, useRef} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../store/api-actions";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
+import {getAuthorizationStatus} from "../../store/user/selector";
+import {AuthorizationStatus} from "../../store/const";
 
 const AuthScreen = () => {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  if (authorizationStatus !== AuthorizationStatus.AUTH) {
+    return <Redirect to="/" />;
+  }
+
   const dispatch = useDispatch();
 
   const loginRef = useRef();
