@@ -1,11 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-const getTimeFromMins = (mins) => {
-  let hours = Math.trunc(mins / 60);
-  let minutes = mins % 60;
-  return hours + `h ` + minutes + `m`;
-};
+import {getTimeFromMins} from "../utils/film";
 
 const TabDetails = ({film}) => {
   return <>
