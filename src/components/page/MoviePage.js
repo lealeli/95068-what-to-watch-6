@@ -4,13 +4,14 @@ import {useDispatch, useSelector} from "react-redux";
 import Tab from "../Tab";
 import FilmList from "../FilmList";
 import LoadingScreen from "../LoadingScreen";
-import {fetchFilm, fetchFilmsList, setFavoriteStatus} from "../../store/api-actions";
+import {fetchFilm, fetchFilmsList} from "../../store/api-actions";
 import Auth from "../Auth";
 import NotFoundScreen from "./NotFoundScreen";
-import {AuthorizationStatus, FavoriteStatus} from "../../store/const";
+import {AuthorizationStatus} from "../../store/const";
 import {getActiveMove, getFilmList} from "../../store/films/selector";
 import {getAuthorizationStatus} from "../../store/user/selector";
 import browserHistory from "../../store/browser-history";
+import MyListBtn from "../MyListBtn";
 
 const MoviePage = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,6 @@ const MoviePage = () => {
   }
 
   const film = filmLoader.film;
-  const handleOnSetFavoriteStatus = () => dispatch(setFavoriteStatus(film.id, FavoriteStatus.ADD));
 
   return (
     <>
@@ -80,20 +80,11 @@ const MoviePage = () => {
                 <button className="btn btn--play movie-card__button" type="button"
                   onClick={() => browserHistory.push(`/player/${film.id}`)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
+                    <use xlinkHref="#play-s"/>
                   </svg>
                   <span>Play</span>
                 </button>
-                {
-                  (authorizationStatus === AuthorizationStatus.AUTH) &&
-                  <button className="btn btn--list movie-card__button" type="button"
-                    onClick={handleOnSetFavoriteStatus}>
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"/>
-                    </svg>
-                    <span>My list</span>
-                  </button>
-                }
+                <MyListBtn film={film}/>
                 {
                   (authorizationStatus === AuthorizationStatus.AUTH) &&
                   <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link>

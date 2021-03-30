@@ -121,11 +121,12 @@ describe(`Async operation work correctly`, () => {
 
     apiMock
       .onPost(`/favorite/${fakeFilmId}/1`)
-      .reply(200);
+      .reply(200, {fakeData: true});
 
     return testMethod(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(0);
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, setFilm(fakeFilmId, {fakeData: true}, false));
       });
   });
 });

@@ -14,7 +14,7 @@ const defaultState = {
     isReviewPosting: false,
   },
   promoFilm: {
-    film: {},
+    filmId: 0,
     isDataLoaded: false,
   },
 };
@@ -69,8 +69,10 @@ describe(`Корректная работа редьюсера film`, () => {
 
   it(`Обработка в редьюсере action setPromoFilm с корректным стейтом`, () => {
     const expectedState = {...defaultState, promoFilm: {
-      film: {name: `name`, id: 1, url: `url`},
+      filmId: 1,
       isDataLoaded: true,
+    }, activeMove: {
+      1: {film: {name: `name`, id: 1, url: `url`}, isFetching: false},
     }};
 
     expect(film(defaultState, setPromoFilm({name: `name`, id: 1, url: `url`})))

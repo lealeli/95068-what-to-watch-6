@@ -4,28 +4,28 @@ import {useDispatch, useSelector} from "react-redux";
 import FilmList from "../FilmList";
 import ListGenre from "../ListGenre";
 import ShowMore from "../ShowMore";
-import {AuthorizationStatus, COUNT_FILM_PAGE, FavoriteStatus} from "../../store/const";
+import {COUNT_FILM_PAGE} from "../../store/const";
 import LoadingScreen from "../LoadingScreen";
-import {fetchFilmsList, fetchPromoFilm, setFavoriteStatus} from "../../store/api-actions";
+import {fetchFilmsList, fetchPromoFilm} from "../../store/api-actions";
 import Auth from "../Auth";
-import {getPreparedFilms, getPromoFilm} from "../../store/films/selector";
+import {getActiveMove, getPreparedFilms, getPromoFilm} from "../../store/films/selector";
 import browserHistory from "../../store/browser-history";
-import {getAuthorizationStatus} from "../../store/user/selector";
+import MyListBtn from "../MyListBtn";
 
 const Main = () => {
   const dispatch = useDispatch();
 
-  const promoFilm = useSelector(getPromoFilm);
+  const promoFilmData = useSelector(getPromoFilm);
   const preparedFilms = useSelector(getPreparedFilms);
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const activeMove = useSelector(getActiveMove);
 
   const [count, setCount] = useState(COUNT_FILM_PAGE);
 
   useEffect(() => {
-    if (!promoFilm.isDataLoaded) {
+    if (!promoFilmData.isDataLoaded) {
       dispatch(fetchPromoFilm());
     }
-  }, [promoFilm.isDataLoaded]);
+  }, [promoFilmData.isDataLoaded]);
 
   useEffect(() => {
     if (!preparedFilms.isDataLoaded) {
@@ -33,18 +33,18 @@ const Main = () => {
     }
   }, [preparedFilms.isDataLoaded]);
 
-  if (!preparedFilms.isDataLoaded || !promoFilm.isDataLoaded) {
+  if (!preparedFilms.isDataLoaded || !promoFilmData.isDataLoaded) {
     return (
       <LoadingScreen />
     );
   }
 
-  const handleOnSetFavoriteStatus = () => dispatch(setFavoriteStatus(promoFilm.film.id, FavoriteStatus.ADD));
+  const promoFilm = activeMove[promoFilmData.filmId].film;
 
   return <>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={promoFilm.film.background_image} alt={promoFilm.film.name}/>
+        <img src={promoFilm.background_image} alt={promoFilm.name}/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -65,33 +65,24 @@ const Main = () => {
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src={promoFilm.film.poster_image} alt={promoFilm.film.name} width="218" height="327"/>
+            <img src={promoFilm.poster_image} alt={promoFilm.name} width="218" height="327"/>
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{promoFilm.film.name}</h2>
+            <h2 className="movie-card__title">{promoFilm.name}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{promoFilm.film.genre}</span>
-              <span className="movie-card__year">{promoFilm.film.released}</span>
+              <span className="movie-card__genre">{promoFilm.genre}</span>
+              <span className="movie-card__year">{promoFilm.released}</span>
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button" onClick={() => browserHistory.push(`/player/${promoFilm.film.id}`)}>
+              <button className="btn btn--play movie-card__button" type="button" onClick={() => browserHistory.push(`/player/${promoFilm.id}`)}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"/>
                 </svg>
                 <span>Play</span>
               </button>
-              {
-                (authorizationStatus === AuthorizationStatus.AUTH) &&
-                <button className="btn btn--list movie-card__button" type="button"
-                  onClick={handleOnSetFavoriteStatus}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"/>
-                  </svg>
-                  <span>My list</span>
-                </button>
-              }
+              <MyListBtn film={promoFilm}/>
             </div>
           </div>
         </div>

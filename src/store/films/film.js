@@ -13,7 +13,7 @@ const initialState = {
     isReviewPosting: false,
   },
   promoFilm: {
-    film: {},
+    filmId: 0,
     isDataLoaded: false,
   },
 };
@@ -34,7 +34,8 @@ const film = (state = initialState, action) => {
     case ActionType.SET_PROMO_FILM:
       return {
         ...state,
-        promoFilm: {film: action.payload, isDataLoaded: true},
+        promoFilm: {filmId: action.payload.id, isDataLoaded: true},
+        activeMove: {...state.activeMove, [action.payload.id]: {film: action.payload, isFetching: false}},
       };
     case ActionType.SET_FILM:
       return {
