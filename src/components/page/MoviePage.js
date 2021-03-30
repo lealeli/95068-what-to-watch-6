@@ -1,16 +1,16 @@
 import React, {memo, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import Tab from "../components/Tab";
-import FilmList from "../components/FilmList";
-import LoadingScreen from "../components/LoadingScreen";
-import {fetchFilm, fetchFilmsList, setFavoriteStatus} from "../store/api-actions";
-import Auth from "../components/Auth";
+import Tab from "../Tab";
+import FilmList from "../FilmList";
+import LoadingScreen from "../LoadingScreen";
+import {fetchFilm, fetchFilmsList, setFavoriteStatus} from "../../store/api-actions";
+import Auth from "../Auth";
 import NotFoundScreen from "./NotFoundScreen";
-import {AuthorizationStatus, FavoriteStatus} from "../store/const";
-import {getActiveMove, getFilmList} from "../store/films/selector";
-import {getAuthorizationStatus} from "../store/user/selector";
-import browserHistory from "../store/browser-history";
+import {AuthorizationStatus, FavoriteStatus} from "../../store/const";
+import {getActiveMove, getFilmList} from "../../store/films/selector";
+import {getAuthorizationStatus} from "../../store/user/selector";
+import browserHistory from "../../store/browser-history";
 
 const MoviePage = () => {
   const dispatch = useDispatch();

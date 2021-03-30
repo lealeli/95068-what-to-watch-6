@@ -1,6 +1,6 @@
 import React, {memo, useRef} from "react";
 import {useDispatch} from "react-redux";
-import {login} from "../store/api-actions";
+import {login} from "../../store/api-actions";
 import {Link} from "react-router-dom";
 
 const AuthScreen = () => {

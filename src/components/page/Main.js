@@ -1,16 +1,16 @@
 import React, {useState, useEffect, memo} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import FilmList from "../components/FilmList";
-import ListGenre from "../components/ListGenre";
-import ShowMore from "../components/ShowMore";
-import {AuthorizationStatus, COUNT_FILM_PAGE, FavoriteStatus} from "../store/const";
-import LoadingScreen from "../components/LoadingScreen";
-import {fetchFilmsList, fetchPromoFilm, setFavoriteStatus} from "../store/api-actions";
-import Auth from "../components/Auth";
-import {getPreparedFilms, getPromoFilm} from "../store/films/selector";
-import browserHistory from "../store/browser-history";
-import {getAuthorizationStatus} from "../store/user/selector";
+import FilmList from "../FilmList";
+import ListGenre from "../ListGenre";
+import ShowMore from "../ShowMore";
+import {AuthorizationStatus, COUNT_FILM_PAGE, FavoriteStatus} from "../../store/const";
+import LoadingScreen from "../LoadingScreen";
+import {fetchFilmsList, fetchPromoFilm, setFavoriteStatus} from "../../store/api-actions";
+import Auth from "../Auth";
+import {getPreparedFilms, getPromoFilm} from "../../store/films/selector";
+import browserHistory from "../../store/browser-history";
+import {getAuthorizationStatus} from "../../store/user/selector";
 
 const Main = () => {
   const dispatch = useDispatch();

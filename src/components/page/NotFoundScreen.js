@@ -1,11 +1,11 @@
 import React, {useEffect, memo} from "react";
 import {Link} from "react-router-dom";
-import Auth from "../components/Auth";
-import FilmList from "../components/FilmList";
-import {fetchFilmsList} from "../store/api-actions";
+import Auth from "../Auth";
+import FilmList from "../FilmList";
+import {fetchFilmsList} from "../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
-import LoadingScreen from "../components/LoadingScreen";
-import {getFilmList} from "../store/films/selector";
+import LoadingScreen from "../LoadingScreen";
+import {getFilmList} from "../../store/films/selector";
 
 const NotFoundScreen = () => {
   const dispatch = useDispatch();
