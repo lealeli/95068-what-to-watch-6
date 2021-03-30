@@ -3,16 +3,18 @@ import {Link} from "react-router-dom";
 import Auth from "../components/Auth";
 import FilmList from "../components/FilmList";
 import {fetchFilmsList} from "../store/api-actions";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import LoadingScreen from "../components/LoadingScreen";
-import PropTypes from "prop-types";
 import {getFilmList} from "../store/films/selector";
 
-const NotFoundScreen = ({filmList, onLoadData}) => {
+const NotFoundScreen = () => {
+  const dispatch = useDispatch();
+
+  const filmList = useSelector(getFilmList);
 
   useEffect(() => {
     if (!filmList.isDataLoaded) {
-      onLoadData();
+      dispatch(fetchFilmsList());
     }
   }, [filmList.isDataLoaded]);
 
@@ -64,15 +66,4 @@ const NotFoundScreen = ({filmList, onLoadData}) => {
   </>;
 };
 
-NotFoundScreen.propTypes = {
-  filmList: PropTypes.array.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({filmList: getFilmList(state)});
-
-const mapDispatchToProps = (dispatch) => ({onLoadData: () => dispatch(fetchFilmsList())});
-
-export {NotFoundScreen};
-
-export default connect(mapStateToProps, mapDispatchToProps)(memo(NotFoundScreen));
+export default memo(NotFoundScreen);

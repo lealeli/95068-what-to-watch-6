@@ -1,7 +1,6 @@
 import React, {useState, useEffect, memo} from "react";
-import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import FilmList from "../components/FilmList";
 import ListGenre from "../components/ListGenre";
 import ShowMore from "../components/ShowMore";
@@ -13,18 +12,24 @@ import {getPreparedFilms, getPromoFilm} from "../store/films/selector";
 import browserHistory from "../store/browser-history";
 import {getAuthorizationStatus} from "../store/user/selector";
 
-const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData, onSetFavoriteStatus, authorizationStatus}) => {
+const Main = () => {
+  const dispatch = useDispatch();
+
+  const promoFilm = useSelector(getPromoFilm);
+  const preparedFilms = useSelector(getPreparedFilms);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
   const [count, setCount] = useState(COUNT_FILM_PAGE);
 
   useEffect(() => {
     if (!promoFilm.isDataLoaded) {
-      onLoadPromoFilm();
+      dispatch(fetchPromoFilm());
     }
   }, [promoFilm.isDataLoaded]);
 
   useEffect(() => {
     if (!preparedFilms.isDataLoaded) {
-      onLoadData();
+      dispatch(fetchFilmsList());
     }
   }, [preparedFilms.isDataLoaded]);
 
@@ -34,7 +39,7 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData, onSetFavor
     );
   }
 
-  const handleOnSetFavoriteStatus = () => onSetFavoriteStatus(promoFilm.film.id, FavoriteStatus.ADD);
+  const handleOnSetFavoriteStatus = () => dispatch(setFavoriteStatus(promoFilm.film.id, FavoriteStatus.ADD));
 
   return <>
     <section className="movie-card">
@@ -121,26 +126,4 @@ const Main = ({promoFilm, onLoadPromoFilm, preparedFilms, onLoadData, onSetFavor
 
 };
 
-Main.propTypes = {
-  promoFilm: PropTypes.object.isRequired,
-  preparedFilms: PropTypes.object.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-  onLoadPromoFilm: PropTypes.func.isRequired,
-  onSetFavoriteStatus: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  promoFilm: getPromoFilm(state),
-  preparedFilms: getPreparedFilms(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadPromoFilm: () => dispatch(fetchPromoFilm()),
-  onLoadData: () => dispatch(fetchFilmsList()),
-  onSetFavoriteStatus: (id, status) => dispatch(setFavoriteStatus(id, status)),
-});
-
-export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(memo(Main));
+export default memo(Main);

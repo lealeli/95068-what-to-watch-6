@@ -1,7 +1,6 @@
-import React, {useEffect, memo} from "react";
-import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
-import {connect} from "react-redux";
+import React, {memo, useEffect} from "react";
+import {Link, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import Tab from "../components/Tab";
 import FilmList from "../components/FilmList";
 import LoadingScreen from "../components/LoadingScreen";
@@ -13,33 +12,38 @@ import {getActiveMove, getFilmList} from "../store/films/selector";
 import {getAuthorizationStatus} from "../store/user/selector";
 import browserHistory from "../store/browser-history";
 
-const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authorizationStatus, onSetFavoriteStatus}) => {
+const MoviePage = () => {
+  const dispatch = useDispatch();
+  const matchParams = useParams();
 
-  const filmId = Number(match.params.id);
+  const filmList = useSelector(getFilmList);
+  const activeMove = useSelector(getActiveMove);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const filmId = Number(matchParams.id);
   const filmLoader = activeMove[filmId];
 
   useEffect(() => {
     if (!filmList.isDataLoaded) {
-      onLoadData();
+      dispatch(fetchFilmsList());
     }
   }, [filmList.isDataLoaded]);
 
   useEffect(() => {
     if (!filmLoader) {
-      onLoadFilm(filmId);
+      dispatch(fetchFilm(filmId));
     }
   }, [filmLoader]);
 
   if (!filmList.isDataLoaded || !filmLoader || filmLoader.isFetching) {
-    return <LoadingScreen />;
+    return <LoadingScreen/>;
   }
 
   if (!filmLoader.film.id) {
-    return <NotFoundScreen />;
+    return <NotFoundScreen/>;
   }
 
   const film = filmLoader.film;
-  const handleOnSetFavoriteStatus = () => onSetFavoriteStatus(film.id, FavoriteStatus.ADD);
+  const handleOnSetFavoriteStatus = () => dispatch(setFavoriteStatus(film.id, FavoriteStatus.ADD));
 
   return (
     <>
@@ -60,7 +64,7 @@ const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authori
               </Link>
             </div>
 
-            <Auth />
+            <Auth/>
 
           </header>
 
@@ -73,7 +77,8 @@ const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authori
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={() => browserHistory.push(`/player/${film.id}`)}>
+                <button className="btn btn--play movie-card__button" type="button"
+                  onClick={() => browserHistory.push(`/player/${film.id}`)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -116,7 +121,8 @@ const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authori
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={filmList.films.filter((elem) => (elem.genre === film.genre) && (elem.id !== film.id)).slice(0, 4)}/>
+          <FilmList
+            films={filmList.films.filter((elem) => (elem.genre === film.genre) && (elem.id !== film.id)).slice(0, 4)}/>
 
         </section>
 
@@ -138,27 +144,4 @@ const MoviePage = ({filmList, match, onLoadData, onLoadFilm, activeMove, authori
   );
 };
 
-MoviePage.propTypes = {
-  filmList: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-  onLoadFilm: PropTypes.func.isRequired,
-  onSetFavoriteStatus: PropTypes.func.isRequired,
-  activeMove: PropTypes.object.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  filmList: getFilmList(state),
-  activeMove: getActiveMove(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData: () => dispatch(fetchFilmsList()),
-  onLoadFilm: (id) => dispatch(fetchFilm(id)),
-  onSetFavoriteStatus: (id, status) => dispatch(setFavoriteStatus(id, status)),
-});
-
-export {MoviePage};
-export default connect(mapStateToProps, mapDispatchToProps)(memo(MoviePage));
+export default memo(MoviePage);

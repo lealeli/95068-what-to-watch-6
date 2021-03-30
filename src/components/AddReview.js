@@ -1,7 +1,6 @@
 import React, {useEffect, memo} from "react";
-import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {Link, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import FormReview from "./FormReview";
 import Auth from "./Auth";
 import LoadingScreen from "./LoadingScreen";
@@ -9,14 +8,17 @@ import {fetchFilm} from "../store/api-actions";
 import NotFoundScreen from "../page/NotFoundScreen";
 import {getActiveMove} from "../store/films/selector";
 
-const AddReview = ({match, onLoadFilm, activeMove}) => {
+const AddReview = () => {
+  const dispatch = useDispatch();
+  const matchParams = useParams();
 
-  const filmId = Number(match.params.id);
+  const activeMove = useSelector(getActiveMove);
+  const filmId = Number(matchParams.id);
   const filmLoader = activeMove[filmId];
 
   useEffect(() => {
     if (!filmLoader) {
-      onLoadFilm(filmId);
+      dispatch(fetchFilm(filmId));
     }
   }, [filmLoader]);
 
@@ -77,17 +79,5 @@ const AddReview = ({match, onLoadFilm, activeMove}) => {
   );
 };
 
-AddReview.propTypes = {
-  match: PropTypes.object.isRequired,
-  onLoadFilm: PropTypes.func.isRequired,
-  activeMove: PropTypes.object.isRequired,
-};
 
-const mapStateToProps = (state) => ({activeMove: getActiveMove(state)});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadFilm: (id) => dispatch(fetchFilm(id)),
-});
-
-export {AddReview};
-export default connect(mapStateToProps, mapDispatchToProps)(memo(AddReview));
+export default memo(AddReview);

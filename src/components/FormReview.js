@@ -1,10 +1,14 @@
 import React, {useState, useEffect, useCallback, memo} from 'react';
 import PropTypes from "prop-types";
 import {sendComment} from "../store/api-actions";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getAddReview} from "../store/films/selector";
 
-const FormReview = ({id, addReview, onSendComment}) => {
+const FormReview = ({id}) => {
+  const dispatch = useDispatch();
+
+  const addReview = useSelector(getAddReview);
+
   const [reviewForm, setReviewForm] = useState({
     rating: `8`,
     reviewText: ``
@@ -14,7 +18,7 @@ const FormReview = ({id, addReview, onSendComment}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSendComment(id, reviewForm.reviewText, reviewForm.rating);
+    dispatch(sendComment(id, reviewForm.reviewText, reviewForm.rating));
   };
 
   const handleFieldChange = useCallback((evt) => {
@@ -81,15 +85,6 @@ const FormReview = ({id, addReview, onSendComment}) => {
 
 FormReview.propTypes = {
   id: PropTypes.number.isRequired,
-  addReview: PropTypes.object.isRequired,
-  onSendComment: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({addReview: getAddReview(state)});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSendComment: (id, comment, rating) => dispatch(sendComment(id, comment, rating))
-});
-
-export {FormReview};
-export default connect(mapStateToProps, mapDispatchToProps)(memo(FormReview));
+export default memo(FormReview);

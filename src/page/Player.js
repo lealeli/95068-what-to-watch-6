@@ -1,15 +1,19 @@
 import React, {memo, useEffect, useRef, useState} from "react";
-import PropTypes from "prop-types";
 import LoadingScreen from "../components/LoadingScreen";
 import NotFoundScreen from "./NotFoundScreen";
 import {getActiveMove} from "../store/films/selector";
 import {fetchFilm} from "../store/api-actions";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import browserHistory from "../store/browser-history";
+import {useParams} from "react-router-dom";
 
-const Player = ({match, onLoadFilm, activeMove}) => {
+const Player = () => {
+  const dispatch = useDispatch();
+  const matchParams = useParams();
 
-  const filmId = Number(match.params.id);
+  const activeMove = useSelector(getActiveMove);
+
+  const filmId = Number(matchParams.id);
   const filmLoader = activeMove[filmId];
   const videoRef = useRef();
 
@@ -19,7 +23,7 @@ const Player = ({match, onLoadFilm, activeMove}) => {
 
   useEffect(() => {
     if (!filmLoader) {
-      onLoadFilm(filmId);
+      dispatch(fetchFilm(filmId));
     }
   }, [filmLoader]);
 
@@ -112,17 +116,4 @@ const Player = ({match, onLoadFilm, activeMove}) => {
   </>;
 };
 
-Player.propTypes = {
-  match: PropTypes.object.isRequired,
-  onLoadFilm: PropTypes.func.isRequired,
-  activeMove: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({activeMove: getActiveMove(state)});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadFilm: (id) => dispatch(fetchFilm(id)),
-});
-
-export {Player};
-export default connect(mapStateToProps, mapDispatchToProps)(memo(Player));
+export default memo(Player);
