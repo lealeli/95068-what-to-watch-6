@@ -1,14 +1,20 @@
-import React, {useState} from "react";
+import React, {memo, useState} from "react";
 import PropTypes from "prop-types";
 import TabOverview from "./TabOverview";
 import TabDetails from "./TabDetails";
 import TabReviews from "./TabReviews";
+import {useApi} from "../store/api-hook";
 
 const tabs = [`Overview`, `Details`, `Reviews`];
 
 const Tab = ({film = {}}) => {
 
-  const [filmTab, setFilmTab] = useState(`Overview`);
+  const [filmTab, setFilmTab] = useState(tabs[0]);
+  const [comments, isCommentsLoading] = useApi(`/comments/${film.id}`);
+
+  if (isCommentsLoading) {
+    return <div>Loading film info</div>;
+  }
 
   const getComponentByType = (tabFilm) => {
     switch (tabFilm) {
@@ -16,7 +22,7 @@ const Tab = ({film = {}}) => {
         return <TabDetails film={film} />;
 
       case `Reviews`:
-        return <TabReviews />;
+        return <TabReviews comments={comments} />;
     }
 
     return <TabOverview film={film} />;
@@ -46,4 +52,4 @@ Tab.propTypes = {
   film: PropTypes.object.isRequired,
 };
 
-export default Tab;
+export default memo(Tab);

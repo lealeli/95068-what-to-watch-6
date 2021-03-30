@@ -19,3 +19,10 @@ export const getTimeFromMins = (mins) => {
   let minutes = mins % 60;
   return hours + `h ` + minutes + `m`;
 };
+
+export const splitReviewsCol = (array) => {
+  return {
+    first: array.filter((v, i) => !(i % 2)),
+    second: array.filter((v, i) => i % 2),
+  };
+};

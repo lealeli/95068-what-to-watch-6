@@ -3,9 +3,9 @@ import {getRatingString, getTimeFromMins} from "./film";
 describe(`Тестирование getRatingString()`, () => {
   it(`Должен вернуть Normal в валидном промежутке от 3 до 6`, () => {
     const correctAnswer = `Normal`;
-    expect(getRatingString(3)).toBe(correctAnswer);
+    expect(getRatingString(3.1)).toBe(correctAnswer);
     expect(getRatingString(4)).toBe(correctAnswer);
-    expect(getRatingString(5)).toBe(correctAnswer);
+    expect(getRatingString(5.9)).toBe(correctAnswer);
     expect(getRatingString(6)).not.toBe(correctAnswer);
   });
 
@@ -13,7 +13,7 @@ describe(`Тестирование getRatingString()`, () => {
     const correctAnswer = `Awesome`;
     expect(getRatingString(10)).toBe(correctAnswer);
     expect(getRatingString(1000)).toBe(correctAnswer);
-    expect(getRatingString(9)).not.toBe(correctAnswer);
+    expect(getRatingString(9.9)).not.toBe(correctAnswer);
   });
 
 });

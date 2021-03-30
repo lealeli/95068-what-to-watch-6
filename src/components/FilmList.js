@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import PropTypes from "prop-types";
 import FilmCard from "./FilmCard";
 
@@ -29,4 +29,4 @@ FilmList.propTypes = {
   })).isRequired
 };
 
-export default FilmList;
+export default memo(FilmList);

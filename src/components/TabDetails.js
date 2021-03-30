@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import PropTypes from "prop-types";
 import {getTimeFromMins} from "../utils/film";
 
@@ -12,20 +12,7 @@ const TabDetails = ({film}) => {
         </p>
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Starring</strong>
-          <span className="movie-card__details-value">
-                    Bill Murray, <br/>
-                    Edward Norton, <br/>
-                    Jude Law, <br/>
-                    Willem Dafoe, <br/>
-                    Saoirse Ronan, <br/>
-                    Tony Revoloru, <br/>
-                    Tilda Swinton, <br/>
-                    Tom Wilkinson, <br/>
-                    Owen Wilkinson, <br/>
-                    Adrien Brody, <br/>
-                    Ralph Fiennes, <br/>
-                    Jeff Goldblum
-          </span>
+          <span className="movie-card__details-value" dangerouslySetInnerHTML={{__html: film.starring.join(`, <br />`)}}/>
         </p>
       </div>
 
@@ -51,4 +38,4 @@ TabDetails.propTypes = {
   film: PropTypes.object.isRequired,
 };
 
-export default TabDetails;
+export default memo(TabDetails);

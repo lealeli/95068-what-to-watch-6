@@ -41,21 +41,7 @@ exports[`Should TabDetails render correctly 1`] = `
           <br />
           Willem Dafoe, 
           <br />
-          Saoirse Ronan, 
-          <br />
-          Tony Revoloru, 
-          <br />
-          Tilda Swinton, 
-          <br />
-          Tom Wilkinson, 
-          <br />
-          Owen Wilkinson, 
-          <br />
-          Adrien Brody, 
-          <br />
-          Ralph Fiennes, 
-          <br />
-          Jeff Goldblum
+          Saoirse Ronan
         </span>
       </p>
     </div>
