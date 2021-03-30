@@ -3,6 +3,7 @@ import {AuthorizationStatus} from '../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  profile: {}
 };
 
 
@@ -12,6 +13,11 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+    case ActionType.SET_USER_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
       };
   }
   return state;

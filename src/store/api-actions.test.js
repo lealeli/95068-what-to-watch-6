@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import {checkAuth, fetchFilm, fetchFilmsList, fetchPromoFilm, sendComment, setFavoriteStatus} from "./api-actions";
 import {createAPI} from "./api";
-import {loadFilms, requireAuthorization, setComment, setFilm, setPromoFilm} from "./actions";
+import {loadFilms, requireAuthorization, setComment, setFilm, setPromoFilm, setUserProfile} from "./actions";
 import {AuthorizationStatus, FavoriteStatus} from "./const";
 
 const api = createAPI();
@@ -65,12 +65,13 @@ describe(`Async operation work correctly`, () => {
 
     apiMock
       .onGet(`/login`)
-      .reply(200);
+      .reply(200, {fake: true});
 
     return testMethod(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, requireAuthorization(AuthorizationStatus.AUTH));
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(1, setUserProfile({fake: true}));
+        expect(dispatch).toHaveBeenNthCalledWith(2, requireAuthorization(AuthorizationStatus.AUTH));
       });
   });
 

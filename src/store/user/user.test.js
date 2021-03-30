@@ -2,33 +2,29 @@ import {AuthorizationStatus} from "../const";
 import {user} from "./user";
 import {requireAuthorization} from "../actions";
 
+const defaultState = {
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  profile: {}
+};
+
 describe(`Корректная работа редьюсера user`, () => {
   it(`Обработка в редьюсере пустого action с несуществующим начальным стейтом`, () => {
-    const expectedState = {
-      authorizationStatus: AuthorizationStatus.NO_AUTH,
-    };
 
     expect(user(undefined, {}))
-      .toEqual(expectedState);
+      .toEqual(defaultState);
   });
 
   it(`Обработка в редьюсере action requireAuthorization с несуществующим начальным стейтом`, () => {
-    const expectedState = {
-      authorizationStatus: `testStatus`,
-    };
+    const expectedState = {...defaultState, authorizationStatus: `testStatus`};
 
     expect(user(undefined, requireAuthorization(`testStatus`)))
       .toEqual(expectedState);
   });
 
   it(`Обработка в редьюсере action requireAuthorization с корректным стейтом`, () => {
-    const initialState = {
-      authorizationStatus: `testStatus1`,
-    };
+    const initialState = {...defaultState, authorizationStatus: `testStatus1`};
 
-    const expectedState = {
-      authorizationStatus: `testStatus2`,
-    };
+    const expectedState = {...defaultState, authorizationStatus: `testStatus2`};
 
     expect(user(initialState, requireAuthorization(`testStatus2`)))
       .toEqual(expectedState);
