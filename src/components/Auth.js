@@ -1,11 +1,11 @@
 import React, {memo} from "react";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {AuthorizationStatus} from "../store/const";
-import PropTypes from "prop-types";
 import {getAuthorizationStatus} from "../store/user/selector";
 
-const Auth = ({authorizationStatus}) => {
+const Auth = () => {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.AUTH) {
     return <div className="user-block">
@@ -22,11 +22,4 @@ const Auth = ({authorizationStatus}) => {
   </div>;
 };
 
-Auth.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({authorizationStatus: getAuthorizationStatus(state)});
-
-export {Auth};
-export default connect(mapStateToProps)(memo(Auth));
+export default memo(Auth);

@@ -1,21 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-const rating = {
-  'Bad': [0, 3],
-  'Normal': [3, 6],
-  'Good': [6, 8],
-  'Very good': [8, 10]
-};
-
-const getRatingString = (ratingFilm) => {
-  for (let prop in rating) {
-    if ((ratingFilm >= rating[prop][0]) && (ratingFilm < rating[prop][1])) {
-      return prop;
-    }
-  }
-  return `Awesome`;
-};
+import {getRatingString} from "../utils/film";
 
 const TabOverview = ({film}) => {
   return <>
