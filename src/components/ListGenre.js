@@ -11,7 +11,7 @@ const ListGenre = () => {
   const genreActive = useSelector(getGenre);
   const filmList = useSelector(getFilmList);
 
-  const genres = [FILTER_DEFAULT, ...new Set(filmList.films.map((m) => m.genre))];
+  const genres = [FILTER_DEFAULT, ...new Set(filmList.films.map((m) => m.genre))].slice(0, 10);
 
   return <ul className="catalog__genres-list">
     {genres.map((elem) => {

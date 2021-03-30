@@ -15,11 +15,11 @@ const FilmCard = ({name, previewImage, previewVideoLink, id}) => {
   };
 
   return (
-    <article className="small-movie-card catalog__movies-card" onMouseEnter={setActiveMovie} onMouseLeave={cleanActiveMovie} >
-      <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted={isStart} isPlaying={isStart}/>
-      <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`/films/${id}`}>{name}</Link>
-      </h3>
+    <article className="small-movie-card catalog__movies-card" onMouseEnter={setActiveMovie} onMouseLeave={cleanActiveMovie}>
+      <Link className="small-movie-card__link" to={`/films/${id}`}>
+        <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted={isStart} isPlaying={isStart}/>
+        <h3 className="small-movie-card__title">{name}</h3>
+      </Link>
     </article>
   );
 };
