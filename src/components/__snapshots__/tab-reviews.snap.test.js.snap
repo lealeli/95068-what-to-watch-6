@@ -29,7 +29,7 @@ exports[`Should TabReviews render correctly 1`] = `
             </cite>
             <time
               class="review__date"
-              datetime="1557324836569"
+              datetime="2019-13-08"
             >
               May 8, 2019
             </time>
