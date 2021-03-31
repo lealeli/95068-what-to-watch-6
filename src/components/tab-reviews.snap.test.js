@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import TabReviews from "./TabReviews";
+import TabReviews from "./tab-reviews";
 
 const fakeComments = [{
   "id": 1,

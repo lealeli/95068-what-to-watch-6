@@ -1,17 +1,17 @@
 import React, {memo, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import Tab from "../Tab";
-import FilmList from "../FilmList";
-import LoadingScreen from "../LoadingScreen";
+import Tab from "../tab";
+import FilmList from "../film-list";
+import LoadingScreen from "../loading-screen";
 import {fetchFilm, fetchFilmsList} from "../../store/api-actions";
-import Auth from "../Auth";
-import NotFoundScreen from "./NotFoundScreen";
+import Auth from "../auth";
+import NotFoundScreen from "./not-found-screen";
 import {AuthorizationStatus} from "../../store/const";
 import {getActiveMove, getFilmList} from "../../store/films/selector";
 import {getAuthorizationStatus} from "../../store/user/selector";
 import browserHistory from "../../store/browser-history";
-import MyListBtn from "../MyListBtn";
+import MyListBtn from "../my-list-btn";
 
 const MoviePage = () => {
   const dispatch = useDispatch();

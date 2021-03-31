@@ -1,10 +1,10 @@
 import React, {useEffect, memo} from "react";
 import {Link} from "react-router-dom";
-import Auth from "../Auth";
-import FilmList from "../FilmList";
+import Auth from "../auth";
+import FilmList from "../film-list";
 import {fetchFilmsList} from "../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
-import LoadingScreen from "../LoadingScreen";
+import LoadingScreen from "../loading-screen";
 import {getFilmList} from "../../store/films/selector";
 
 const NotFoundScreen = () => {

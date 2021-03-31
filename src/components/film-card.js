@@ -1,7 +1,7 @@
 import React, {useState, memo} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import VideoPlayer from "./VideoPlayer";
+import VideoPlayer from "./video-player";
 
 const FilmCard = ({name, previewImage, previewVideoLink, id}) => {
 

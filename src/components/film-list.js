@@ -1,6 +1,6 @@
 import React, {memo} from "react";
 import PropTypes from "prop-types";
-import FilmCard from "./FilmCard";
+import FilmCard from "./film-card";
 
 const FilmList = ({films}) => {
 

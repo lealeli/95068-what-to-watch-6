@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import TabOverview from "./TabOverview";
+import TabOverview from "./tab-overview";
 
 const fakeFilm = {
   "id": 1,

@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useRef, useState} from "react";
-import LoadingScreen from "../LoadingScreen";
-import NotFoundScreen from "./NotFoundScreen";
+import LoadingScreen from "../loading-screen";
+import NotFoundScreen from "./not-found-screen";
 import {getActiveMove} from "../../store/films/selector";
 import {fetchFilm} from "../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";

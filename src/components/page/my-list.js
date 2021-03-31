@@ -1,7 +1,7 @@
 import React from "react";
-import FilmList from "../FilmList";
-import Auth from "../Auth";
-import LoadingScreen from "../LoadingScreen";
+import FilmList from "../film-list";
+import Auth from "../auth";
+import LoadingScreen from "../loading-screen";
 import {Link} from "react-router-dom";
 import {useApi} from "../../store/api-hook";
 

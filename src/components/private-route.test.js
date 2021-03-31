@@ -4,7 +4,7 @@ import {createMemoryHistory} from "history";
 import {render, screen} from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./private-route";
 import {AuthorizationStatus} from "../store/const";
 
 const mockStore = configureStore({});
