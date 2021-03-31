@@ -4,26 +4,26 @@ import {
   requireAuthorization,
   setFilm,
   setComment,
-  setPromoFilm
+  setPromoFilm, setUserProfile
 } from "./actions";
 import {AuthorizationStatus} from "./const";
 import browserHistory from "./browser-history";
 
 export const fetchFilmsList = () => (dispatch, _getState, _api) => (
   _api.get(`/films`)
-    .then(({data: filmData}) => dispatch(loadFilms(filmData)))
+    .then(({data}) => dispatch(loadFilms(data)))
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, _api) => (
   _api.get(`/films/promo`)
-    .then(({data: filmData}) => dispatch(setPromoFilm(filmData)))
+    .then(({data}) => dispatch(setPromoFilm(data)))
 );
 
 export const fetchFilm = (id) => (dispatch, _getState, _api) => {
   dispatch(setFilm(id, {}, true));
   return _api.get(`/films/${id}`)
-    .then((response) => {
-      dispatch(setFilm(id, response.data, false));
+    .then(({data}) => {
+      dispatch(setFilm(id, data, false));
     })
     .catch(() => {
       dispatch(setFilm(id, {}, false));
@@ -32,12 +32,14 @@ export const fetchFilm = (id) => (dispatch, _getState, _api) => {
 
 export const checkAuth = () => (dispatch, _getState, _api) => (
   _api.get(`/login`)
+    .then(({data}) => dispatch(setUserProfile(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, _api) => (
   _api.post(`/login`, {email, password})
+    .then(({data}) => dispatch(setUserProfile(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(`/`)))
 );
@@ -55,5 +57,8 @@ export const sendComment = (id, comment, rating) => (dispatch, _getState, _api) 
 };
 
 export const setFavoriteStatus = (id, status) => (dispatch, _getState, _api) => {
-  return _api.post(`/favorite/${id}/${status}`);
+  return _api.post(`/favorite/${id}/${status}`)
+    .then(({data}) => {
+      dispatch(setFilm(id, data, false));
+    });
 };

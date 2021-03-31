@@ -2,6 +2,7 @@ export const ActionType = {
   CHANGE_GENRE: `film/changeGenre`,
   LOAD_FILMS: `film/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SET_USER_PROFILE: `user/setUserProfile`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
   SET_FILM: `film/setFilm`,
   SET_COMMENT: `film/setComment`,
@@ -21,6 +22,11 @@ export const loadFilms = (films) => ({
 export const setFilm = (id, film, isFetching) => ({
   type: ActionType.SET_FILM,
   payload: {id, film, isFetching}
+});
+
+export const setUserProfile = (profile) => ({
+  type: ActionType.SET_USER_PROFILE,
+  payload: profile
 });
 
 export const requireAuthorization = (status) => ({
