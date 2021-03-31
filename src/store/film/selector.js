@@ -1,4 +1,4 @@
-import {AppNS} from '../root-reducer';
+import {AppNS} from '../store';
 import {createSelector} from "reselect";
 
 export const getGenre = (state) => state[AppNS.FILM].genre;

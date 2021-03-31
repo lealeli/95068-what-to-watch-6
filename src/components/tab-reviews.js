@@ -1,6 +1,6 @@
 import React, {memo} from "react";
 import PropTypes from "prop-types";
-import {splitReviewsCol} from "../utils/film";
+import {splitReviewsCol} from "../utils/utils";
 import Moment from "react-moment";
 
 

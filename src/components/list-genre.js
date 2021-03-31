@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {changeGenreAction} from "../store/actions";
 import {FILTER_DEFAULT} from "../store/const";
-import {getFilmList, getGenre} from "../store/films/selector";
+import {getFilmList, getGenre} from "../store/film/selector";
 
 const ListGenre = () => {
   const dispatch = useDispatch();

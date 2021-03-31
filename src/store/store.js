@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {film} from './films/film';
+import {film} from './film/film';
 import {user} from './user/user';
 
 export const AppNS = {

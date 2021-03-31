@@ -8,7 +8,7 @@ import {fetchFilm, fetchFilmsList} from "../../store/api-actions";
 import Auth from "../auth";
 import NotFoundScreen from "./not-found-screen";
 import {AuthorizationStatus} from "../../store/const";
-import {getActiveMove, getFilmList} from "../../store/films/selector";
+import {getActiveMove, getFilmList} from "../../store/film/selector";
 import {getAuthorizationStatus} from "../../store/user/selector";
 import browserHistory from "../../store/browser-history";
 import MyListBtn from "../my-list-btn";

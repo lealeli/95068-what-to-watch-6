@@ -1,6 +1,6 @@
 import React, {memo} from "react";
 import PropTypes from "prop-types";
-import {getRatingString} from "../utils/film";
+import {getRatingString} from "../utils/utils";
 
 const TabOverview = ({film}) => {
   return <>

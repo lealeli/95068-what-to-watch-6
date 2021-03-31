@@ -5,7 +5,7 @@ import FilmList from "../film-list";
 import {fetchFilmsList} from "../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
 import LoadingScreen from "../loading-screen";
-import {getFilmList} from "../../store/films/selector";
+import {getFilmList} from "../../store/film/selector";
 
 const NotFoundScreen = () => {
   const dispatch = useDispatch();

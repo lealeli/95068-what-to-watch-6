@@ -1,4 +1,4 @@
-const film = {
+const utils = {
   'Bad': [0, 3],
   'Normal': [3, 6],
   'Good': [6, 8],
@@ -6,8 +6,8 @@ const film = {
 };
 
 export const getRatingString = (ratingFilm) => {
-  for (let prop in film) {
-    if ((ratingFilm >= film[prop][0]) && (ratingFilm < film[prop][1])) {
+  for (let prop in utils) {
+    if ((ratingFilm >= utils[prop][0]) && (ratingFilm < utils[prop][1])) {
       return prop;
     }
   }

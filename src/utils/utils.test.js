@@ -1,4 +1,4 @@
-import {getRatingString, getTimeFromMins} from "./film";
+import {getRatingString, getTimeFromMins} from "./utils";
 
 describe(`Тестирование getRatingString()`, () => {
   it(`Должен вернуть Normal в валидном промежутке от 3 до 6`, () => {

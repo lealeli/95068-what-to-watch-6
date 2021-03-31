@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback, memo} from 'react';
 import PropTypes from "prop-types";
 import {sendComment} from "../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
-import {getAddReview} from "../store/films/selector";
+import {getAddReview} from "../store/film/selector";
 
 const FormReview = ({id}) => {
   const dispatch = useDispatch();

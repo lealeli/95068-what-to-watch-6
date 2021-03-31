@@ -6,7 +6,7 @@ import Auth from "../auth";
 import LoadingScreen from "../loading-screen";
 import {fetchFilm} from "../../store/api-actions";
 import NotFoundScreen from "./not-found-screen";
-import {getActiveMove} from "../../store/films/selector";
+import {getActiveMove} from "../../store/film/selector";
 
 const AddReview = () => {
   const dispatch = useDispatch();

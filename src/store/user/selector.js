@@ -1,4 +1,4 @@
-import {AppNS} from '../root-reducer';
+import {AppNS} from '../store';
 
 export const getAuthorizationStatus = (state) => state[AppNS.USER].authorizationStatus;
 export const getUserProfile = (state) => state[AppNS.USER].profile;
