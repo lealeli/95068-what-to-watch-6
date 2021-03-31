@@ -2,7 +2,7 @@ import React, {memo} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {changeGenreAction} from "../store/actions";
-import {FILTER_DEFAULT} from "../store/const";
+import {COUNT_GENRE_LIST, FILTER_DEFAULT} from "../store/const";
 import {getFilmList, getGenre} from "../store/film/selector";
 
 const ListGenre = () => {
@@ -11,7 +11,7 @@ const ListGenre = () => {
   const genreActive = useSelector(getGenre);
   const filmList = useSelector(getFilmList);
 
-  const genres = [FILTER_DEFAULT, ...new Set(filmList.films.map((m) => m.genre))].slice(0, 10);
+  const genres = [FILTER_DEFAULT, ...new Set(filmList.films.map((m) => m.genre))].slice(0, COUNT_GENRE_LIST);
 
   return <ul className="catalog__genres-list">
     {genres.map((elem) => {

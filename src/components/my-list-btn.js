@@ -11,7 +11,7 @@ const MyListBtn = ({film}) => {
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (authorizationStatus !== AuthorizationStatus.AUTH) {
-    return <></>;
+    return null;
   }
 
   const handleOnSetFavoriteStatus = () => dispatch(setFavoriteStatus(film.id, film.is_favorite ? FavoriteStatus.REMOVE : FavoriteStatus.ADD));
