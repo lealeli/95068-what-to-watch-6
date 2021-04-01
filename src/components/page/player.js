@@ -40,7 +40,7 @@ const Player = () => {
 
   }, [isPlaying, filmLoader]);
 
-  const ticker = () => {
+  const onTick = () => {
     if (videoRef.current && videoRef.current.readyState === 4) {
       // video loaded
       setSecondsLeft(videoRef.current.duration - videoRef.current.currentTime);
@@ -53,7 +53,7 @@ const Player = () => {
       return null;
     }
 
-    const tick = setInterval(ticker, 1000);
+    const tick = setInterval(onTick, 1000);
     return () => clearInterval(tick);
   }, [isPlaying]);
 
