@@ -1,9 +1,9 @@
 import React, {memo} from "react";
 import PropTypes from "prop-types";
-import {AuthorizationStatus, FavoriteStatus} from "../store/const";
+import {AuthorizationStatus, FavoriteStatus} from "../../store/const";
 import {useDispatch, useSelector} from "react-redux";
-import {getAuthorizationStatus} from "../store/user/selector";
-import {setFavoriteStatus} from "../store/api-actions";
+import {getAuthorizationStatus} from "../../store/user/selector";
+import {setFavoriteStatus} from "../../store/api-actions";
 
 const MyListBtn = ({film}) => {
   const dispatch = useDispatch();

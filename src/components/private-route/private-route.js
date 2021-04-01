@@ -1,8 +1,8 @@
 import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../store/const';
-import {getAuthorizationStatus} from "../store/user/selector";
+import {AppRoute, AuthorizationStatus} from '../../store/const';
+import {getAuthorizationStatus} from "../../store/user/selector";
 import {useSelector} from "react-redux";
 
 

@@ -1,14 +1,14 @@
 import React from "react";
-import Main from "./page/main";
+import Main from "../page/main/main";
 import {Route, Switch} from "react-router-dom";
-import MyList from "./page/my-list";
-import MoviePage from "./page/movie-page";
-import AddReview from "./page/add-review";
-import Player from "./page/player";
-import NotFoundScreen from "./page/not-found-screen";
-import PrivateRoute from "./private-route";
-import AuthScreen from "./page/auth-screen";
-import {AppRoute} from "../store/const";
+import MyList from "../page/my-list/my-list";
+import MoviePage from "../page/movie-page/movie-page";
+import AddReview from "../page/add-review/add-review";
+import Player from "../page/player/player";
+import NotFoundScreen from "../page/not-found/not-found";
+import PrivateRoute from "../private-route/private-route";
+import AuthScreen from "../page/login/login";
+import {AppRoute} from "../../store/const";
 
 const App = () => {
 

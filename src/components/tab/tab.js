@@ -1,9 +1,9 @@
 import React, {memo, useState} from "react";
 import PropTypes from "prop-types";
-import TabOverview from "./tab-overview";
-import TabDetails from "./tab-details";
-import TabReviews from "./tab-reviews";
-import {useApi} from "../store/api-hook";
+import TabOverview from "../tab-overview/tab-overview";
+import TabDetails from "../tab-details/tab-details";
+import TabReviews from "../tab-reviews/tab-reviews";
+import {useApi} from "../../store/api-hook";
 
 const tabs = [`Overview`, `Details`, `Reviews`];
 

@@ -37,7 +37,7 @@ export const checkAuth = () => (dispatch, _getState, _api) => (
     .catch(() => {})
 );
 
-export const login = ({login: email, password}) => (dispatch, _getState, _api) => (
+export const doLogin = ({login: email, password}) => (dispatch, _getState, _api) => (
   _api.post(`/login`, {email, password})
     .then(({data}) => dispatch(setUserProfile(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))

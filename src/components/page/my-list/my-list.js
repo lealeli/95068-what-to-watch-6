@@ -1,9 +1,9 @@
 import React from "react";
-import FilmList from "../film-list";
-import Auth from "../auth";
-import LoadingScreen from "../loading-screen";
+import FilmList from "../../film-list/film-list";
+import Auth from "../../auth/auth";
+import LoadingScreen from "../../loading-screen/loading-screen";
 import {Link} from "react-router-dom";
-import {useApi} from "../../store/api-hook";
+import {useApi} from "../../../store/api-hook";
 
 const MyList = () => {
   const [myList, isLoading] = useApi(`/favorite`);

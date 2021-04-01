@@ -1,9 +1,9 @@
 import React, {memo} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {changeGenreAction} from "../store/actions";
-import {COUNT_GENRE_LIST, FILTER_DEFAULT} from "../store/const";
-import {getFilmList, getGenre} from "../store/film/selector";
+import {changeGenreAction} from "../../store/actions";
+import {COUNT_GENRE_LIST, FILTER_DEFAULT} from "../../store/const";
+import {getFilmList, getGenre} from "../../store/film/selector";
 
 const ListGenre = () => {
   const dispatch = useDispatch();

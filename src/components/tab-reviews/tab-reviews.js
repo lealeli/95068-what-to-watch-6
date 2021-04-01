@@ -1,7 +1,7 @@
 import React, {memo} from "react";
 import PropTypes from "prop-types";
-import {splitReviewsCol} from "../utils/utils";
-import TabReviewsCol from "./tab-reviews-col";
+import {splitReviewsCol} from "../../utils/utils";
+import TabReviewsCol from "../tab-reviews-col/tab-reviews-col";
 
 const TabReviews = ({comments = []}) => {
   if (comments.length === 0) {

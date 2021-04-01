@@ -1,10 +1,10 @@
 import React, {memo, useEffect, useRef, useState} from "react";
-import LoadingScreen from "../loading-screen";
-import NotFoundScreen from "./not-found-screen";
-import {getActiveMove} from "../../store/film/selector";
-import {fetchFilm} from "../../store/api-actions";
+import LoadingScreen from "../../loading-screen/loading-screen";
+import NotFoundScreen from "../not-found/not-found";
+import {getActiveMove} from "../../../store/film/selector";
+import {fetchFilm} from "../../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
-import browserHistory from "../../store/browser-history";
+import browserHistory from "../../../store/browser-history";
 import {useParams} from "react-router-dom";
 
 const Player = () => {

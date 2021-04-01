@@ -1,13 +1,13 @@
 import React, {useEffect, memo} from "react";
 import {Link} from "react-router-dom";
-import Auth from "../auth";
-import FilmList from "../film-list";
-import {fetchFilmsList} from "../../store/api-actions";
+import Auth from "../../auth/auth";
+import FilmList from "../../film-list/film-list";
+import {fetchFilmsList} from "../../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
-import LoadingScreen from "../loading-screen";
-import {getFilmList} from "../../store/film/selector";
+import LoadingScreen from "../../loading-screen/loading-screen";
+import {getFilmList} from "../../../store/film/selector";
 
-const NotFoundScreen = () => {
+const NotFound = () => {
   const dispatch = useDispatch();
 
   const filmList = useSelector(getFilmList);
@@ -66,4 +66,4 @@ const NotFoundScreen = () => {
   </>;
 };
 
-export default memo(NotFoundScreen);
+export default memo(NotFound);

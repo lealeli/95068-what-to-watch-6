@@ -1,16 +1,16 @@
 import React, {useState, useEffect, memo} from "react";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import FilmList from "../film-list";
-import ListGenre from "../list-genre";
-import ShowMore from "../show-more";
-import {COUNT_FILM_PAGE} from "../../store/const";
-import LoadingScreen from "../loading-screen";
-import {fetchFilmsList, fetchPromoFilm} from "../../store/api-actions";
-import Auth from "../auth";
-import {getActiveMove, getPreparedFilms, getPromoFilm} from "../../store/film/selector";
-import browserHistory from "../../store/browser-history";
-import MyListBtn from "../my-list-btn";
+import FilmList from "../../film-list/film-list";
+import ListGenre from "../../list-genre/list-genre";
+import ShowMore from "../../show-more/show-more";
+import {COUNT_FILM_PAGE} from "../../../store/const";
+import LoadingScreen from "../../loading-screen/loading-screen";
+import {fetchFilmsList, fetchPromoFilm} from "../../../store/api-actions";
+import Auth from "../../auth/auth";
+import {getActiveMove, getPreparedFilms, getPromoFilm} from "../../../store/film/selector";
+import browserHistory from "../../../store/browser-history";
+import MyListBtn from "../../my-list-btn/my-list-btn";
 
 const Main = () => {
   const dispatch = useDispatch();

@@ -1,12 +1,12 @@
 import React, {useEffect, memo} from "react";
 import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import FormReview from "../form-review";
-import Auth from "../auth";
-import LoadingScreen from "../loading-screen";
-import {fetchFilm} from "../../store/api-actions";
-import NotFoundScreen from "./not-found-screen";
-import {getActiveMove} from "../../store/film/selector";
+import FormReview from "../../form-rewiew/form-review";
+import Auth from "../../auth/auth";
+import LoadingScreen from "../../loading-screen/loading-screen";
+import {fetchFilm} from "../../../store/api-actions";
+import NotFoundScreen from "../not-found/not-found";
+import {getActiveMove} from "../../../store/film/selector";
 
 const AddReview = () => {
   const dispatch = useDispatch();

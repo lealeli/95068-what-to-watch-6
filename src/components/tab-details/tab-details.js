@@ -1,6 +1,6 @@
 import React, {memo} from "react";
 import PropTypes from "prop-types";
-import {getTimeFromMins} from "../utils/utils";
+import {getTimeFromMins} from "../../utils/utils";
 
 const TabDetails = ({film}) => {
   return <>

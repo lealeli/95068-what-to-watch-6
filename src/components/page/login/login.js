@@ -1,11 +1,11 @@
 import React, {memo, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../store/api-actions";
+import {doLogin} from "../../../store/api-actions";
 import {Link, Redirect} from "react-router-dom";
-import {getAuthorizationStatus} from "../../store/user/selector";
-import {AppRoute, AuthorizationStatus} from "../../store/const";
+import {getAuthorizationStatus} from "../../../store/user/selector";
+import {AppRoute, AuthorizationStatus} from "../../../store/const";
 
-const AuthScreen = () => {
+const Login = () => {
   const dispatch = useDispatch();
 
   const loginRef = useRef();
@@ -19,7 +19,7 @@ const AuthScreen = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    dispatch(login({
+    dispatch(doLogin({
       login: loginRef.current.value,
       password: passwordRef.current.value,
     }));
@@ -91,4 +91,4 @@ const AuthScreen = () => {
   </>;
 };
 
-export default memo(AuthScreen);
+export default memo(Login);
