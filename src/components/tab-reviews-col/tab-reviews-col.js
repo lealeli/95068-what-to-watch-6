@@ -8,7 +8,7 @@ const TabReviewsCol = ({comments = []}) => {
   }
 
   return <div className="movie-card__reviews-col">{comments.map((c) =>
-    <div key={`${c.user.id}-${c.id}`} className="review">
+    <div key={c.id} className="review">
       <blockquote className="review__quote">
         <p className="review__text">{c.comment}</p>
 
