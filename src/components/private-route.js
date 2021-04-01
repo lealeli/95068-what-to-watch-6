@@ -8,6 +8,9 @@ import {useSelector} from "react-redux";
 
 const PrivateRoute = ({render, path, exact}) => {
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  if (authorizationStatus === AuthorizationStatus.WAIT) {
+    return null;
+  }
 
   return (
     <Route

@@ -2,7 +2,7 @@ import {ActionType} from '../actions';
 import {AuthorizationStatus} from '../const';
 
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.WAIT,
   profile: {}
 };
 

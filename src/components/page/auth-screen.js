@@ -6,15 +6,15 @@ import {getAuthorizationStatus} from "../../store/user/selector";
 import {AuthorizationStatus} from "../../store/const";
 
 const AuthScreen = () => {
-  const authorizationStatus = useSelector(getAuthorizationStatus);
-  if (authorizationStatus !== AuthorizationStatus.AUTH) {
-    return <Redirect to="/" />;
-  }
-
   const dispatch = useDispatch();
 
   const loginRef = useRef();
   const passwordRef = useRef();
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return <Redirect to="/" />;
+  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
