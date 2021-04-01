@@ -14,7 +14,9 @@ const VideoPlayer = ({isPlaying = true, isMuted = true, src, poster}) => {
       }, 1000);
 
     } else {
-      clearTimeout(timeoutId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       video.load();
     }
 
