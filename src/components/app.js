@@ -8,19 +8,20 @@ import Player from "./page/player";
 import NotFoundScreen from "./page/not-found-screen";
 import PrivateRoute from "./private-route";
 import AuthScreen from "./page/auth-screen";
+import {AppRoute} from "../store/const";
 
 const App = () => {
 
   return (
     <>
       <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/login" component={AuthScreen} />
-        <PrivateRoute exact path="/mylist" render={(prop) => <MyList {...prop} />} />
-        <Route exact path="/films/:id" component={MoviePage} />
-        <PrivateRoute exact path="/films/:id/review" render={(prop) => <AddReview {...prop} />} />
-        <Route exact path="/player/:id" component={Player} />
-        <Route component={NotFoundScreen} />
+        <Route exact path={AppRoute.ROOT} component={Main}/>
+        <Route exact path={AppRoute.LOGIN} component={AuthScreen}/>
+        <PrivateRoute exact path={AppRoute.MY_LIST} render={(prop) => <MyList {...prop} />}/>
+        <Route exact path={AppRoute.FILM} component={MoviePage}/>
+        <PrivateRoute exact path={AppRoute.ADD_REVIEW} render={(prop) => <AddReview {...prop} />}/>
+        <Route exact path={AppRoute.PLAYER} component={Player}/>
+        <Route component={NotFoundScreen}/>
       </Switch>
     </>
   );

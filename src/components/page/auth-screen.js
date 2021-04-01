@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../store/api-actions";
 import {Link, Redirect} from "react-router-dom";
 import {getAuthorizationStatus} from "../../store/user/selector";
-import {AuthorizationStatus} from "../../store/const";
+import {AppRoute, AuthorizationStatus} from "../../store/const";
 
 const AuthScreen = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const AuthScreen = () => {
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   if (authorizationStatus === AuthorizationStatus.AUTH) {
-    return <Redirect to="/" />;
+    return <Redirect to={AppRoute.ROOT} />;
   }
 
   const handleSubmit = (evt) => {

@@ -12,3 +12,12 @@ export const FavoriteStatus = {
   ADD: `1`,
   REMOVE: `0`,
 };
+
+export const AppRoute = {
+  LOGIN: `/login`,
+  ROOT: `/`,
+  MY_LIST: `/mylist`,
+  FILM: `/films/:id`,
+  ADD_REVIEW: `/films/:id/review`,
+  PLAYER: `/player/:id`,
+};
