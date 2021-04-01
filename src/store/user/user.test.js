@@ -3,7 +3,8 @@ import {user} from "./user";
 import {requireAuthorization} from "../actions";
 
 const defaultState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.WAIT,
+  authorizationError: ``,
   profile: {}
 };
 
