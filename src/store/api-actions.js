@@ -4,7 +4,7 @@ import {
   requireAuthorization,
   setFilm,
   setComment,
-  setPromoFilm, setUserProfile
+  setPromoFilm, setUserProfile, setAuthorizationError
 } from "./actions";
 import {AuthorizationStatus} from "./const";
 import browserHistory from "./browser-history";
@@ -42,6 +42,7 @@ export const doLogin = ({login: email, password}) => (dispatch, _getState, _api)
     .then(({data}) => dispatch(setUserProfile(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(`/`)))
+    .catch((error) => dispatch(setAuthorizationError(error.response.data.error)))
 );
 
 export const sendComment = (id, comment, rating) => (dispatch, _getState, _api) => {

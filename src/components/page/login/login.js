@@ -2,7 +2,7 @@ import React, {memo, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {doLogin} from "../../../store/api-actions";
 import {Link, Redirect} from "react-router-dom";
-import {getAuthorizationStatus} from "../../../store/user/selector";
+import {getAuthorizationError, getAuthorizationStatus} from "../../../store/user/selector";
 import {AppRoute, AuthorizationStatus} from "../../../store/const";
 
 const Login = () => {
@@ -12,6 +12,7 @@ const Login = () => {
   const passwordRef = useRef();
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authorizationError = useSelector(getAuthorizationError);
   if (authorizationStatus === AuthorizationStatus.AUTH) {
     return <Redirect to={AppRoute.ROOT} />;
   }
@@ -24,7 +25,6 @@ const Login = () => {
       password: passwordRef.current.value,
     }));
   };
-
 
   return <>
     <div className="user-page">
@@ -42,13 +42,16 @@ const Login = () => {
 
       <div className="sign-in user-page__content">
         <form action="" className="sign-in__form" onSubmit={handleSubmit}>
+          {authorizationError !== `` && <div className="sign-in__message">
+            <p>{authorizationError}</p>
+          </div>}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
                 ref={loginRef}
                 className="sign-in__input"
                 placeholder="Email address"
-                type="text"
+                type="email"
                 name="user-email"
                 id="user-email"
                 data-testid="email"

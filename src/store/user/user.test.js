@@ -4,6 +4,7 @@ import {requireAuthorization} from "../actions";
 
 const defaultState = {
   authorizationStatus: AuthorizationStatus.WAIT,
+  authorizationError: ``,
   profile: {}
 };
 
