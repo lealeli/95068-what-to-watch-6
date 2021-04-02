@@ -69,7 +69,7 @@ const FormReview = ({id}) => {
           </div>
 
           <div className="add-review__text">
-            <textarea className="add-review__textarea" onChange={handleFieldChange} name="reviewText" id="review-text" minLength="50" maxLength="500"
+            <textarea className="add-review__textarea" onChange={handleFieldChange} name="reviewText" id="review-text" minLength="50" maxLength="400"
               placeholder="Review text" disabled={isDisabledForm}/>
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit" disabled={isDisabledForm}>Post</button>
